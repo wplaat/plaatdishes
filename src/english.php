@@ -35,11 +35,12 @@ $lang['DUTCH'] = 'Dutch';
 ** ------------------
 */
 
-$lang['LINK_HOME']           = i('home'). 'Home'; 
+$lang['LINK_HOME']          = i('home'). 'Home'; 
 
 $lang['LINK_SAVE']          = i('edit') . 'Save'; 
 $lang['LINK_CANCEL']        = i('times') . 'Cancel';
 $lang['LINK_LOGIN']         = 'Login';
+$lang['LINK_LOGOUT']        = 'Logout';
 
 /*
 ** ------------------

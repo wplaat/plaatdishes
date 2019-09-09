@@ -60,6 +60,10 @@ function plaatprotect_home_save_event() {
 		return;
 	}
 	
+	if (($task1==0) && ($task2==0) && ($task3==0) && ($task4==0)) {
+		return;
+	}
+	
 	plaatprotect_db_dishes_insert($user, $task1, $task2, $task3, $task4);
 }
 
@@ -205,6 +209,7 @@ function plaatprotect_home_page() {
 	$page .= '</tr>';
 		
 	$count = 0;
+	$user = 0;
 	$sql = 'select a.pid, sum(a.total) as total, b.name from dishes a, users b where a.pid=b.pid group by a.pid order by total';
     $result = plaatprotect_db_query($sql);	
     while ($data = plaatprotect_db_fetch_object($result)) {
@@ -221,6 +226,7 @@ function plaatprotect_home_page() {
 		$page .= '<td>';
 		if ($count==0) {
 			$page .= 'Afwas hulp van vandaag!';
+			$user = $data->pid;
 			$count=1;
 		} 
 		$page .= '</td>';		
@@ -233,29 +239,42 @@ function plaatprotect_home_page() {
 	
 	$page .= '<br/>';
 	
-	$page .= '<div class="menu">';
+	$page .= '<table>';
+	$page .= '<tr>';
 	
+	$page .= '<td>';
 	$page .= 'naam: ';
-	$page .= plaatdishes_users();
+	$page .= plaatdishes_users($user);
+	$page .= '</td>';
 	
-	$page .= ' grootte: ';
+	$page .= '<td>';
+	$page .= 'vat grootte: ';
 	$page .= plaatdishes_task(1, 0);
+	$page .= '</td>';
 	
-	$page .= ' afruimen: ';
+	$page .= '<td>';
+	$page .= 'afruimen kwaliteit: ';
 	$page .= plaatdishes_task(2, 0);
+	$page .= '</td>';
 	
-	$page .= ' afwas: ';
+	$page .= '<td>';
+	$page .= 'afwas kwaliteit: ';
 	$page .= plaatdishes_task(3, 0);
+	$page .= '</td>';
 	
-	$page .= ' opruimen: ';
+	$page .= '<td>';
+	$page .= 'opruimen kwaliteit: ';
 	$page .= plaatdishes_task(4, 0);
+	$page .= '</td>';
 	
-	$page .= '</div>';
+	$page .= '</tr>';
+	$page .= '</table>';
 	
 	$page .= '<br/>';
 	
 	$page .= '<p>';
 	$page .= plaatprotect_link('pid='.PAGE_HOME.'&eid='.EVENT_SAVE, t('LINK_SAVE'));
+	$page .= plaatprotect_link('pid='.PAGE_HOME_LOGIN, t('LINK_LOGOUT'));
 	$page .= '</p>';
 	
 	$page .= '</div>';
