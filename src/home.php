@@ -225,7 +225,7 @@ function plaatprotect_home_page() {
 		$page .= '</td>';	
 		$page .= '<td>';
 		if ($count==0) {
-			$page .= 'Afwas hulp van vandaag!';
+			$page .= 'Afwas hulp vandaag!';
 			$user = $data->pid;
 			$count=1;
 		} 
@@ -248,12 +248,12 @@ function plaatprotect_home_page() {
 	$page .= '</td>';
 	
 	$page .= '<td>';
-	$page .= 'vat grootte: ';
+	$page .= 'vaat grootte: ';
 	$page .= plaatdishes_task(1, 0);
 	$page .= '</td>';
 	
 	$page .= '<td>';
-	$page .= 'afruimen kwaliteit: ';
+	$page .= 'afruim kwaliteit: ';
 	$page .= plaatdishes_task(2, 0);
 	$page .= '</td>';
 	
@@ -263,7 +263,7 @@ function plaatprotect_home_page() {
 	$page .= '</td>';
 	
 	$page .= '<td>';
-	$page .= 'opruimen kwaliteit: ';
+	$page .= 'opruim kwaliteit: ';
 	$page .= plaatdishes_task(4, 0);
 	$page .= '</td>';
 	
