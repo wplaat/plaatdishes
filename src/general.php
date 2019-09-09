@@ -2,7 +2,7 @@
 
 /* 
 **  ============
-**  PlaatProtect
+**  PlaatDishes
 **  ============
 **
 **  Created by wplaat
@@ -38,27 +38,6 @@ define('BASE_DIR', '/var/www/html/plaatprotect');
 
 define('PAGE_HOME_LOGIN',           10);
 define('PAGE_HOME',                 11);
-define('PAGE_EVENT_VIEW',           12);
-define('PAGE_WEBCAM',               13);
-define('PAGE_ARCHIVE',              14);
-define('PAGE_IMAGE_VIEWER',         15);
-define('PAGE_ZIGBEE',               16);
-define('PAGE_ZWAVE',                17);
-define('PAGE_ZWAVE_EDIT',           18);
-define('PAGE_ABOUT',                19);
-define('PAGE_DONATE',               20);
-define('PAGE_RELEASE_NOTES',        21);
-define('PAGE_MOTION',               22);
-define('PAGE_ACTOR',                23);
-define('PAGE_SETTING_LOGIN',        24);
-define('PAGE_SETTING_CATEGORY',     25);
-define('PAGE_SETTING_LIST',         26);
-define('PAGE_SETTING_EDIT',         27);
-define('PAGE_BATTERY',              28);
-define('PAGE_TEMPERATURE',          29);
-define('PAGE_HUMIDITY',             30);
-define('PAGE_LUMINANCE',			31);
-define('PAGE_PRESSURE',				32);
 
 /*
 ** -----------
@@ -66,45 +45,11 @@ define('PAGE_PRESSURE',				32);
 ** -----------
 */
 
-define('EVENT_NONE',                110);
-define('EVENT_PREV',                111);
-define('EVENT_NEXT',                112);
-define('EVENT_SAVE',                113);
-define('EVENT_BACKUP',              114);
-define('EVENT_EXPORT',              115);
-define('EVENT_LOGIN',               116);
-define('EVENT_SCHEME',              117);
-define('EVENT_LANGUAGE',            118);
-define('EVENT_DELETE',              119);
-define('EVENT_PICTURE',             120);
-define('EVENT_VIEW',                121);
-define('EVENT_PLAY',                122);
-define('EVENT_NEXT_FAST',           123);
-define('EVENT_PREV_FAST',           124);
-define('EVENT_STOP',                125);
-define('EVENT_BEGIN',               126);
-define('EVENT_END',                 127);
-define('EVENT_UPDATE',              128);
-define('EVENT_SWITCH_SCENARIO',     129);
-define('EVENT_ON',                  130);
-define('EVENT_OFF',                 131);
-define('EVENT_EDIT',                132);
-define('EVENT_FILTER',              133);
-define('EVENT_REFRESH',             134);
-
-/*
-** -----------
-** SCENARIO
-** -----------
-*/
-
-define('SCENARIO_HOME',   				1);
-define('SCENARIO_SLEEP',  				2);
-define('SCENARIO_AWAY',  				3);
-define('SCENARIO_PANIC',  				4);
-
-define('PANIC_ON',        				1);
-define('PANIC_OFF',       				0);
+define('EVENT_NONE',                100);
+define('EVENT_LOGIN',               101);
+define('EVENT_SCHEME',              102);
+define('EVENT_LANGUAGE',            103);
+define('EVENT_SAVE',                104);
 
 /*
 ** -----------
@@ -113,17 +58,6 @@ define('PANIC_OFF',       				0);
 */
 
 define('CATEGORY_GENERAL',           0);
-define('CATEGORY_ALARM',            10);
-define('CATEGORY_ZWAVE',            11);
-define('CATEGORY_ZWAVE_CONTROL',    12);
-define('CATEGORY_EMAIL',            21);
-define('CATEGORY_DRONE',            31);
-define('CATEGORY_SECURITY',         51);
-define('CATEGORY_WEBCAM_1',         61);
-define('CATEGORY_WEBCAM_2',         62);
-define('CATEGORY_ZIGBEE',           71);
-define('CATEGORY_MOBILE',           81);
-define('CATEGORY_WEATHER',          91);
 
 /**
  ********************************
@@ -235,13 +169,11 @@ function add_icons() {
 
 function loadCSS($url) {
 	return '<link href="'.$url.'" rel="stylesheet" type="text/css" />';
-	//return '<style>' . file_get_contents($url) . '</style>';
 }
 
 
 function loadJS($url) {
 	return '<script language="JavaScript" src="'.$url.'" type="text/javascript"></script>';	
-	//return '<script>' . file_get_contents($url) . '</script>';
 }
 
 /**
@@ -276,7 +208,7 @@ function general_header() {
 
   $page .= loadJS('js/link2.js');
   
-   $page .= loadCSS('css/general1.css');
+   $page .= loadCSS('css/general.css');
 
     // Load the icons from Font Awesome not with loadCSS because this file never will change and it cant load the font
     $page .= '<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>';
@@ -351,99 +283,9 @@ function i ($name) {
 	return $icon;
 }
 
-function plaatprotect_ago($timestamp) {
-
-	$seconds = time()-strtotime($timestamp);
-	$minutes = round($seconds / 60);
-	$hours = round($seconds / (60*60));
-	$days = round($seconds / (60*60*24));
-	
-	if ($seconds<60) {
-		return $seconds.' '.t('SECONDS');
-	} else if (($minutes>0) && ($minutes==1)) {
-		return $minutes.' '.t('MINUTE');
-	} else if (($minutes>0) && ($minutes<60)) {
-		return $minutes.' '.t('MINUTES');
-	} else if (($hours>0) && ($hours==1)) {
-		return $hours.' '.t('HOUR');
-	} else if (($hours>0) && ($hours<24)) {
-		return $hours.' '.t('HOURS');
-	} else if (($days>0) && ($days==1)) {
-		return $days.' '.t('DAY');
-	} else {
-		return $days.' '.t('DAYS');
-	}
-}
-
-function plaatprotect_flip($value) {
-	if($value==1) {
-		return 0;
-	} else {
-		return 1;
-	}
-}
-
 // ----------------------------
 // NAVIGATION
 // ----------------------------
-
-function plaatprotect_dayofweek($value) {
-
-    list($year, $month, $day) = explode("-", $value);
-    return t("DAY_".jddayofweek( cal_to_jd(CAL_GREGORIAN, $month, $day, $year))); 
-}
-
-/**
- * Get previous day
- */
-function plaatprotect_prev_day($date) {
-
-  list($year, $month, $day) = explode("-", $date);
-
-  $prev_day=$day-1;
-  $prev_month=$month;
-  $prev_year=$year;   
-
-  if ($prev_day<=0) {
-     $prev_month=$month-1;
-     $prev_year=$year;
-     $prev_day=date("t", strtotime($prev_year.'-'.$prev_month.'-1'));
-  }
-
-  if ($prev_month<=0) {
-     $prev_month=12;
-     $prev_year=$year-1;
-     $prev_day=date("t", strtotime($prev_year.'-'.$prev_month.'-1'));
-  }
-  
-  return $prev_year.'-'.$prev_month.'-'.$prev_day; 
-}
-
-/**
- * Get next day
- */
-function plaatprotect_next_day($date) {
-
-  list($year, $month, $day) = explode("-", $date);
-
-  $next_day=$day+1;   
-  $next_month=$month;
-  $next_year=$year;   
-  
-  if ($next_day>date("t", strtotime($next_year.'-'.$next_month.'-1'))) {
-     $next_day=1;
-     $next_month=$next_month+1;
-     $next_year=$year;
-  }
-  
-  if ($next_month>12) {
-     $next_day=1;
-     $next_month=1;
-     $next_year=$year+1;
-  }
-  
-  return $next_year.'-'.$next_month.'-'.$next_day; 
-}
 
 function plaatprotect_get($label, $default) {
 	
@@ -543,38 +385,6 @@ function plaatprotect_create_path($path) {
     umask(0);
     return ($return && is_writable($prev_path)) ? mkdir($path, 0777) : false;
 }
-
-/** 
- * @mainpage plaatprotect Documentation
- *   Welcome to the plaatprotect documentation.
- *
- * @section Introduction
- *   plaatprotect is a burglar alarm center for raspberry Pi. Its collect Zwave sensor data
- *   and and active a configured counter measure. With a web GUI the system can be controlled.
- *
- * @section Links
- *   Website: http://www.plaatsoft.nl
- *   Code: https://github.com/wplaat/plaatprotect
- *
- * @section Credits
- *   Documentation: wplaat\n
- *
- * @section Licence
- *   <b>Copyright (c) 1996-2019 Plaatsoft</b>
- *
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *   
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *   
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
  
 // ----------------------------
 // THE END

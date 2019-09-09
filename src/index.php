@@ -109,7 +109,7 @@ if (strlen($token)>0) {
 ** --------------------------------------
 */
 
-$home_password = plaatprotect_db_config_value('home_password',CATEGORY_SECURITY);
+$home_password = plaatprotect_db_config_value('home_password',CATEGORY_GENERAL);
 
 // Create for each visitor an account (without session_id)
 $session_id = plaatprotect_db_get_session($ip);
@@ -212,87 +212,6 @@ switch ($pid) {
 	case PAGE_HOME_LOGIN: 
 		include "home.php";
 		$page = plaatprotect_home();
-		break;
-
-	case PAGE_ABOUT: 
-		include "about.php";
-		$page = plaatprotect_about();
-		break;
-		
-	case PAGE_IMAGE_VIEWER: 
-	case PAGE_ARCHIVE: 
-	case PAGE_WEBCAM: 
-		include "webcam_view.php";
-		$page = plaatprotect_webcam();
-		break;
-		
-	case PAGE_ZIGBEE: 
-		include "zigbee_view.php";
-		$page = plaatprotect_zigbee();
-		break;
-		
-	case PAGE_ZWAVE:
-   case PAGE_ZWAVE_EDIT: 
-		include "zwave_view.php";
-		$page = plaatprotect_zwave();
-		break;
-		
-	case PAGE_ACTOR: 
-		include "actor.php";
-		$page = plaatprotect_actor();
-		break;
-	
-	case PAGE_MOTION: 
-		include "motion.php";
-		$page = plaatprotect_motion();
-		break;
-		
-	case PAGE_BATTERY: 
-		include "battery.php";
-		$page = plaatprotect_battery();
-		break;
-		
-	case PAGE_TEMPERATURE: 
-		include "temperature.php";
-		$page = plaatprotect_temperature();
-		break;
-		
-	case PAGE_HUMIDITY: 
-		include "humidity.php";
-		$page = plaatprotect_humidity();
-		break;
-		
-	case PAGE_LUMINANCE: 
-		include "luminance.php";
-		$page = plaatprotect_luminance();
-		break;
-		
-	case PAGE_PRESSURE: 
-		include "pressure.php";
-		$page = plaatprotect_pressure();
-		break;
-				
-	case PAGE_DONATE: 
-		include "donate.php";
-		$page = plaatprotect_donate();
-		break;
-
-	case PAGE_RELEASE_NOTES: 
-		include "release_notes.php";
-		$page = plaatprotect_release_notes();
-		break;
-	 
-	case PAGE_SETTING_LIST: 
-	case PAGE_SETTING_EDIT: 
-	case PAGE_SETTING_LOGIN: 
-	case PAGE_SETTING_CATEGORY:
-		include "settings.php";
-		$page = plaatprotect_settings();
-		break;
-		
-	case PAGE_EVENT_VIEW:
-		include "event_view.php";
-		$page = plaatprotect_event_view();
 		break;
 }
 
