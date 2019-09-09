@@ -37,8 +37,6 @@ $version = plaatprotect_db_config_value('database_version', CATEGORY_GENERAL);
 */
 
 function plaatprotect_home_save_event() {
-
-	echo 'save ';
 	
 	$user = plaatprotect_post("user", 0);
 	$task1 = plaatprotect_post("task1", 0);
@@ -62,11 +60,7 @@ function plaatprotect_home_save_event() {
 		return;
 	}
 	
-	echo 'task1='.$task1.' ';
-	echo 'task2='.$task2.' ';
-	echo 'task3='.$task3.' ';
-	echo 'task4='.$task4.' ';
-	plaatprotect_db_dishes_insert($pid, $task1, $task2, $task3, $task4);
+	plaatprotect_db_dishes_insert($user, $task1, $task2, $task3, $task4);
 }
 
 function plaatprotect_home_login_event() {
@@ -261,7 +255,7 @@ function plaatprotect_home_page() {
 	$page .= '<br/>';
 	
 	$page .= '<p>';
-	$page .= plaatprotect_link('pid='.PAGE_HOME.'eid='.EVENT_SAVE, t('LINK_SAVE'));
+	$page .= plaatprotect_link('pid='.PAGE_HOME.'&eid='.EVENT_SAVE, t('LINK_SAVE'));
 	$page .= '</p>';
 	
 	$page .= '</div>';

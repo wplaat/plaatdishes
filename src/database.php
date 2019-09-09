@@ -285,9 +285,9 @@ function plaatprotect_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
 	
 	$total = $task1 + $task2 + $task3 + $task4;
 	
-    $query  = 'insert into event_onramp (data, task1, task2, task3, task4, total) ';
-	$query .= 'values ("'.$date.'",'.$task1.','.$task2.','.$task3.','.$task4.','.$total.')';
-	
+    $query  = 'insert into dishes (date, pid, task1, task2, task3, task4, total) ';
+	$query .= 'values ("'.$date.'",'.$pid.','.$task1.','.$task2.','.$task3.','.$task4.','.$total.')';
+		
 	return plaatprotect_db_query($query);
 }
 
