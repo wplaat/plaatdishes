@@ -279,6 +279,10 @@ function plaatprotect_home_page() {
 	
 	$page .= '</div>';
 			
+	$page .= '<br/>';
+	$page .= plaatprotect_db_dishes_check();
+			
+			
 	$page .= '<div class="upgrade" id="upgrade"></div>';
 	$page .= '<script type="text/javascript" src="js/version1.js"></script>';
 	

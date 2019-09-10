@@ -33,7 +33,7 @@ if (!file_exists( "config.php" )) {
 
 	echo '<h1>ERROR</h1>';
 	echo '<br/>';
-   echo t('CONGIG_BAD');
+    echo t('CONGIG_BAD');
 	echo '<br/>';
 	
 	$time_end = microtime(true);

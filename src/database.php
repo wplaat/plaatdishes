@@ -279,15 +279,35 @@ function plaatprotect_db_get_session($ip, $new=false) {
 ** ---------------------
 */
 
+function plaatprotect_db_dishes_check() {
+
+	$page = "";
+	$sql = 'select did, date, pid, task1, task2, task3, task4, hash from dishes';
+    $result = plaatprotect_db_query($sql);
+    
+	while($data = plaatprotect_db_fetch_object($result)) {
+		$key = $data->date."-".$data->task1."-".$data->task2."-".$data->task3."-".$data->task4;
+		$hash = md5($key);
+			
+		if ($hash!=$data->hash) {
+			$page .= "Record ".$data->did." is invalid!<br/>";
+		}
+	}
+    return $page;
+}
+   
 function plaatprotect_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
  
     $date = date('Y-m-d');
 	
 	$total = $task1 + $task2 + $task3 + $task4;
 	
-    $query  = 'insert into dishes (date, pid, task1, task2, task3, task4, total) ';
-	$query .= 'values ("'.$date.'",'.$pid.','.$task1.','.$task2.','.$task3.','.$task4.','.$total.')';
-		
+	$key = $date."-".$task1."-".$task2."-".$task3."-".$task4;
+		$hash = md5($key);
+	
+    $query  = 'insert into dishes (date, pid, task1, task2, task3, task4, total, hash)';
+	$query .= 'values ("'.$date.'",'.$pid.','.$task1.','.$task2.','.$task3.','.$task4.','.$total.',"'.$hash.'")';
+			
 	return plaatprotect_db_query($query);
 }
 
