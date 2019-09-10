@@ -202,11 +202,11 @@ function plaatprotect_home_page() {
 		
 	$page .= '<table>';
 	$page .= '<tr>';
-	$page .= '<th>Id</th>';
-	$page .= '<th>Naam</th>';
-	$page .= '<th>Score</th>';
-	$page .= '<th>Datum</th>';
-	$page .= '<th>Extra</th>';
+	$page .= '<th>'.t('LABEL_ID').'</th>';
+	$page .= '<th>'.t('LABEL_NAME').'</th>';
+	$page .= '<th>'.t('LABEL_SCORE').'</th>';
+	$page .= '<th>'.t('LABEL_DATE').'</th>';
+	$page .= '<th>'.t('LABEL_EXTRA').'</th>';
 	$page .= '</tr>';
 		
 	$count = 0;
@@ -237,7 +237,7 @@ function plaatprotect_home_page() {
 		
 		$page .= '<td>';
 		if ($count==0) {
-			$page .= 'Afwas hulp vandaag!';
+			$page .= t('LABEL_DISH_HELPER');
 			$user = $data->pid;
 			$count=1;
 		} 
@@ -255,27 +255,27 @@ function plaatprotect_home_page() {
 	$page .= '<tr>';
 	
 	$page .= '<td>';
-	$page .= 'naam: ';
+	$page .= t('LABEL_NAME').': ';
 	$page .= plaatdishes_users($user);
 	$page .= '</td>';
 	
 	$page .= '<td>';
-	$page .= 'vaat grootte: ';
+	$page .= t('LABEL_DISH_SIZE').': ';
 	$page .= plaatdishes_task(1, 0);
 	$page .= '</td>';
 	
 	$page .= '<td>';
-	$page .= 'afruim kwaliteit: ';
+	$page .= t('LABEL_PREPARE_QUALITY').': ';
 	$page .= plaatdishes_task(2, 0);
 	$page .= '</td>';
 	
 	$page .= '<td>';
-	$page .= 'afwas kwaliteit: ';
+	$page .= t('LABEL_CLEANING_QUALITY').': ';
 	$page .= plaatdishes_task(3, 0);
 	$page .= '</td>';
 	
 	$page .= '<td>';
-	$page .= 'opruim kwaliteit: ';
+	$page .= t('LABEL_CLEANUP_QUALITY').': ';
 	$page .= plaatdishes_task(4, 0);
 	$page .= '</td>';
 	
