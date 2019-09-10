@@ -205,6 +205,7 @@ function plaatprotect_home_page() {
 	$page .= '<th>Id</th>';
 	$page .= '<th>Naam</th>';
 	$page .= '<th>Score</th>';
+	$page .= '<th>Datum</th>';
 	$page .= '<th>Extra</th>';
 	$page .= '</tr>';
 		
@@ -214,15 +215,26 @@ function plaatprotect_home_page() {
     $result = plaatprotect_db_query($sql);	
     while ($data = plaatprotect_db_fetch_object($result)) {
 		$page .= '<tr>';
+		
 		$page .= '<td>';
 		$page .= $data->pid;
 		$page .= '</td>';
+		
 		$page .= '<td>';
 		$page .= $data->name;
 		$page .= '</td>';		
+		
 		$page .= '<td>';
 		$page .= $data->total;
 		$page .= '</td>';	
+		
+		$page .= '<td>';
+		$sql2 = 'select date from dishes where pid='.$data->pid.' order by did limit 0,1';
+		$result2 = plaatprotect_db_query($sql2);	
+		$data2 = plaatprotect_db_fetch_object($result2);
+		$page .= plaatprotect_convert_date($data2->date);
+		$page .= '</td>';	
+		
 		$page .= '<td>';
 		if ($count==0) {
 			$page .= 'Afwas hulp vandaag!';
@@ -279,10 +291,8 @@ function plaatprotect_home_page() {
 	
 	$page .= '</div>';
 			
-	$page .= '<br/>';
 	$page .= plaatprotect_db_dishes_check();
-			
-			
+
 	$page .= '<div class="upgrade" id="upgrade"></div>';
 	$page .= '<script type="text/javascript" src="js/version1.js"></script>';
 	

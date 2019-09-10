@@ -382,6 +382,10 @@ function plaatprotect_create_path($path) {
     umask(0);
     return ($return && is_writable($prev_path)) ? mkdir($path, 0777) : false;
 }
+
+function plaatprotect_convert_date($date) {
+	return date("d-m-Y", strtotime($date));
+}
  
 // ----------------------------
 // THE END
