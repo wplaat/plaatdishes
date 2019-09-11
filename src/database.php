@@ -44,13 +44,13 @@ $db = "";
  * @param $dbname database name
  * @return connect result (true = successfull connected | false = connection failed)
  */
-function plaatprotect_db_connect($dbhost, $dbuser, $dbpass, $dbname) {
+function plaatdishes_db_connect($dbhost, $dbuser, $dbpass, $dbname) {
 
 	global $db;
 
-   $db = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);	
+    $db = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);	
 	if (mysqli_connect_errno()) {
-		plaatprotect_db_error();
+		plaatdishes_db_error();
 		return false;		
 	}
 	return true;
@@ -60,7 +60,7 @@ function plaatprotect_db_connect($dbhost, $dbuser, $dbpass, $dbname) {
  * Disconnect from database  
  * @return disconnect result
  */
-function plaatprotect_db_close() {
+function plaatdishes_db_close() {
 
 	global $db;
 
@@ -73,7 +73,7 @@ function plaatprotect_db_close() {
  * Show SQL error 
  * @return HTML formatted SQL error
  */
-function plaatprotect_db_error() {
+function plaatdishes_db_error() {
 
 	if (DEBUG == 1) {
 		echo mysqli_connect_error(). "<br/>\n\r";
@@ -85,7 +85,7 @@ function plaatprotect_db_error() {
  * @return queries count
  */
 $query_count=0;
-function plaatprotect_db_count() {
+function plaatdishes_db_count() {
 
 	global $query_count;
 	return $query_count;
@@ -94,14 +94,14 @@ function plaatprotect_db_count() {
 /**
  * Execute database multi query
  */
-function plaatprotect_db_multi_query($queries) {
+function plaatdishes_db_multi_query($queries) {
 
 	$tokens = @preg_split("/;/", $queries);
 	foreach ($tokens as $token) {
 	
 		$token=trim($token);
 		if (strlen($token)>3) {
-			plaatprotect_db_query($token);		
+			plaatdishes_db_query($token);		
 		}
 	}
 }
@@ -111,7 +111,7 @@ function plaatprotect_db_multi_query($queries) {
  * @param $query SQL query with will be executed.
  * @return Database result
  */
-function plaatprotect_db_query($query) {
+function plaatdishes_db_query($query) {
 			
 	global $query_count;
 	global $db;
@@ -125,7 +125,7 @@ function plaatprotect_db_query($query) {
 	$result = @mysqli_query($db, $query);
 
 	if (!$result) {
-		plaatprotect_db_error();		
+		plaatdishes_db_error();		
 	}
 	
 	return $result;
@@ -136,7 +136,7 @@ function plaatprotect_db_query($query) {
  * @param $data  input.
  * @return $data escaped
  */
-function plaatprotect_db_escape($data) {
+function plaatdishes_db_escape($data) {
 
 	global $db;
 	
@@ -147,7 +147,7 @@ function plaatprotect_db_escape($data) {
  * Fetch query result 
  * @return mysql data set if any
  */
-function plaatprotect_db_fetch_object($result) {
+function plaatdishes_db_fetch_object($result) {
 	
 	$row="";
 	
@@ -161,7 +161,7 @@ function plaatprotect_db_fetch_object($result) {
  * Return number of rows
  * @return number of row in dataset
  */
-function plaatprotect_db_num_rows($result) {
+function plaatdishes_db_num_rows($result) {
 	
 	return mysqli_num_rows($result);
 }
@@ -181,7 +181,7 @@ function startsWith($haystack, $needle){
  * Execute SQL script
  * @param $version Version of sql patch file
  */
-function plaatprotect_db_execute_sql_file($version) {
+function plaatdishes_db_execute_sql_file($version) {
 
     $filename = 'database/patch-'.$version.'.sql';
     $commands = file_get_contents($filename);
@@ -206,7 +206,7 @@ function plaatprotect_db_execute_sql_file($version) {
 				if (DEBUG == 1) {
 					echo $command."<br/>\n\r";
 				}
-            $success += (@plaatprotect_db_query($command)==false ? 0 : 1);
+            $success += (@plaatdishes_db_query($command)==false ? 0 : 1);
             $total += 1;
         }
     }
@@ -221,19 +221,19 @@ function plaatprotect_db_execute_sql_file($version) {
 /**
  * Check db version and upgrade if needed!
  */
-function plaatprotect_db_check_version() {
+function plaatdishes_db_check_version() {
 
    // Execute SQL base sql script if needed!
    $sql = "select 1 FROM config limit 1" ;
-   $result = plaatprotect_db_query($sql);
+   $result = plaatdishes_db_query($sql);
    if (!$result)  {
-      plaatprotect_db_execute_sql_file("0.1");
+      plaatdishes_db_execute_sql_file("0.1");
    }
 		
 	// Execute SQL path script v0.2 if needed
-	$value = plaatprotect_db_config_value('database_version', CATEGORY_GENERAL);
+	$value = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
    if ($value=="0.1")  { 
-		plaatprotect_db_execute_sql_file("0.2");
+		plaatdishes_db_execute_sql_file("0.2");
    }
 }
 
@@ -243,11 +243,11 @@ function plaatprotect_db_check_version() {
 ** ---------------------
 */
 
-function plaatprotect_db_get_session($ip, $new=false) {
+function plaatdishes_db_get_session($ip, $new=false) {
 
    $sql = 'select sid, timestamp, session_id, requests from session where ip="'.$ip.'"';
-   $result = plaatprotect_db_query($sql);
-   $data = plaatprotect_db_fetch_object($result);
+   $result = plaatdishes_db_query($sql);
+   $data = plaatdishes_db_fetch_object($result);
 
    $session_id = "";
    if ( isset($data->sid) ) {   
@@ -261,13 +261,13 @@ function plaatprotect_db_get_session($ip, $new=false) {
 
 		$now = date('Y-m-d H:i:s');
 		$sql = 'update session set timestamp="'.$now.'", session_id="'.$session_id.'", requests='.++$requests.' where sid="'.$data->sid.'"';
-	    plaatprotect_db_query($sql);
+	    plaatdishes_db_query($sql);
 	  
    } else {
 
 		$now = date('Y-m-d H:i:s');
 		$sql = 'insert into session (timestamp, ip, requests, language, theme, session_id) value ("'.$now.'", "'.$ip.'", 1, "en", "light", "'.$session_id.'")';
-		plaatprotect_db_query($sql);
+		plaatdishes_db_query($sql);
 	}
 
    return $session_id;
@@ -279,13 +279,13 @@ function plaatprotect_db_get_session($ip, $new=false) {
 ** ---------------------
 */
 
-function plaatprotect_db_dishes_check() {
+function plaatdishes_db_dishes_check() {
 
 	$page = "";
 	$sql = 'select did, date, pid, task1, task2, task3, task4, total, hash from dishes';
-    $result = plaatprotect_db_query($sql);
+    $result = plaatdishes_db_query($sql);
     
-	while($data = plaatprotect_db_fetch_object($result)) {
+	while($data = plaatdishes_db_fetch_object($result)) {
 		$key = $data->date."-".$data->pid."-".$data->task1."-".$data->task2."-".$data->task3."-".$data->task4."-".$data->total;
 		$hash = md5($key);
 			
@@ -296,7 +296,7 @@ function plaatprotect_db_dishes_check() {
     return $page;
 }
    
-function plaatprotect_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
+function plaatdishes_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
  
     $date = date('Y-m-d');
 	
@@ -308,7 +308,7 @@ function plaatprotect_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
     $query  = 'insert into dishes (date, pid, task1, task2, task3, task4, total, hash)';
 	$query .= 'values ("'.$date.'",'.$pid.','.$task1.','.$task2.','.$task3.','.$task4.','.$total.',"'.$hash.'")';
 			
-	return plaatprotect_db_query($query);
+	return plaatdishes_db_query($query);
 }
 
 /*
@@ -317,13 +317,13 @@ function plaatprotect_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
 ** ---------------------
 */
 
-function plaatprotect_db_config_value($key, $category=CATEGORY_GENERAL) {
+function plaatdishes_db_config_value($key, $category=CATEGORY_GENERAL) {
 
 	$value="";
 	
 	$sql = 'select value from config where token="'.$key.'" and category='.$category;
-	$result = plaatprotect_db_query($sql);
-	$data = plaatprotect_db_fetch_object($result);
+	$result = plaatdishes_db_query($sql);
+	$data = plaatdishes_db_fetch_object($result);
 
 	if (isset($data->value)) {
 		$value = $data ->value;
@@ -332,20 +332,20 @@ function plaatprotect_db_config_value($key, $category=CATEGORY_GENERAL) {
    return $value;
 }
 
-function plaatprotect_db_config($key, $category=0) {
+function plaatdishes_db_config($key, $category=0) {
 
    $sql = 'select id, category, token, value from config where token="'.$key.'" and category='.$category;
-   $result = plaatprotect_db_query($sql);
+   $result = plaatdishes_db_query($sql);
   
-   return plaatprotect_db_fetch_object($result);
+   return plaatdishes_db_fetch_object($result);
 }
 
-function plaatprotect_db_config_update($config) {
+function plaatdishes_db_config_update($config) {
 
   $now = date('Y-m-d H:i:s');
   $query = 'update config set value="'.$config->value.'", date="'.$now.'" where id='.$config->id;		
   
-  return plaatprotect_db_query($query);
+  return plaatdishes_db_query($query);
 }
 
 /*

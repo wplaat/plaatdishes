@@ -2,7 +2,7 @@
 
 /*
 **  ============
-**  PlaatProtect
+**  plaatdishes
 **  ============
 **
 **  Created by wplaat
@@ -52,7 +52,7 @@ include "config.php";
 ** --------------------
 */
 
-if ( @plaatprotect_db_connect($dbhost, $dbuser, $dbpass, $dbname) == false) {
+if ( @plaatdishes_db_connect($dbhost, $dbuser, $dbpass, $dbname) == false) {
 
 	echo general_header();
 
@@ -69,7 +69,7 @@ if ( @plaatprotect_db_connect($dbhost, $dbuser, $dbpass, $dbname) == false) {
 	exit;
 }
 
-@plaatprotect_db_check_version($version);
+@plaatdishes_db_check_version($version);
 
 /*
 ** ----------------------
@@ -87,13 +87,13 @@ $date = date('Y-m-d');
 $limit = 0;
 $cat=0;
 
-$session = plaatprotect_post('session', '');
-$token = plaatprotect_post("token", "");
+$session = plaatdishes_post('session', '');
+$token = plaatdishes_post("token", "");
 
 if (strlen($token)>0) {
 	
   /* Decode token to php parameters */
-  $token =  plaatprotect_token_decode($token);	  
+  $token =  plaatdishes_token_decode($token);	  
   $tokens = @preg_split("/&/", $token);
 	
   foreach ($tokens as $item) {
@@ -109,10 +109,10 @@ if (strlen($token)>0) {
 ** --------------------------------------
 */
 
-$home_password = plaatprotect_db_config_value('home_password',CATEGORY_GENERAL);
+$home_password = plaatdishes_db_config_value('home_password',CATEGORY_GENERAL);
 
 // Create for each visitor an account (without session_id)
-$session_id = plaatprotect_db_get_session($ip);
+$session_id = plaatdishes_db_get_session($ip);
 
 if (strlen($home_password)>0) {
 	if ((strlen($session_id)==0) || ($session!=$session_id)) {
@@ -127,13 +127,13 @@ if (strlen($home_password)>0) {
 ** -------------------
 */
 
-function plaatprotect_scheme_action() {
+function plaatdishes_scheme_action() {
 
 	global $ip;
 		
 	$sql  = 'select theme from session where ip="'.$ip.'"';
-	$result = plaatprotect_db_query($sql);
-	$row = plaatprotect_db_fetch_object($result);
+	$result = plaatdishes_db_query($sql);
+	$row = plaatdishes_db_fetch_object($result);
 
 	if ($row->theme=="light") {
 		$theme = "dark";
@@ -142,16 +142,16 @@ function plaatprotect_scheme_action() {
 	}
 	
 	$sql = 'update session set theme="'.$theme.'" where ip="'.$ip.'"';
-	plaatprotect_db_query($sql);
+	plaatdishes_db_query($sql);
 }
 
-function plaatprotect_language_action() {
+function plaatdishes_language_action() {
 	
 	global $ip;
 	
 	$sql  = 'select language from session where ip="'.$ip.'"';
-	$result = plaatprotect_db_query($sql);
-	$row = plaatprotect_db_fetch_object($result);
+	$result = plaatdishes_db_query($sql);
+	$row = plaatdishes_db_fetch_object($result);
 
 	if ($row->language=="en") {
 		$language = "nl";
@@ -160,7 +160,7 @@ function plaatprotect_language_action() {
 	}
 	
 	$sql = 'update session set language="'.$language.'" where ip="'.$ip.'"';
-	plaatprotect_db_query($sql);
+	plaatdishes_db_query($sql);
 }
 
 /*
@@ -172,11 +172,11 @@ function plaatprotect_language_action() {
 switch ($sid) {
 
 	case EVENT_SCHEME: 
-			plaatprotect_scheme_action();
+			plaatdishes_scheme_action();
 			break;
 			
 	case EVENT_LANGUAGE:
-			plaatprotect_language_action();
+			plaatdishes_language_action();
 			break;
 }
 
@@ -188,8 +188,8 @@ switch ($sid) {
 */
 
 $sql  = 'select language from session where ip="'.$ip.'"';
-$result = plaatprotect_db_query($sql);
-$row = plaatprotect_db_fetch_object($result);
+$result = plaatdishes_db_query($sql);
+$row = plaatdishes_db_fetch_object($result);
 
 if ($row->language=="nl") {
 
@@ -211,7 +211,7 @@ switch ($pid) {
 	case PAGE_HOME: 
 	case PAGE_HOME_LOGIN: 
 		include "home.php";
-		$page = plaatprotect_home();
+		$page = plaatdishes_home();
 		break;
 }
 
@@ -229,7 +229,7 @@ $time = $time_end - $time_start;
 
 echo general_footer($time);
 
-plaatprotect_db_close();
+plaatdishes_db_close();
 
 /*
 ** -------------------

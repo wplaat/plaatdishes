@@ -28,7 +28,7 @@
 */
 
 // Installation path
-define('BASE_DIR', '/var/www/html/plaatprotect');
+define('BASE_DIR', '/var/www/html/plaatdishes');
  
 /*
 ** -----------
@@ -65,7 +65,7 @@ define('CATEGORY_GENERAL',           0);
 ** ---------------------------------------------------------------- 
 */
 
-function plaatprotect_password_hash($raw) {
+function plaatdishes_password_hash($raw) {
 
 	$options = [
 		'cost' => 12,
@@ -73,7 +73,7 @@ function plaatprotect_password_hash($raw) {
 	return password_hash($raw, PASSWORD_BCRYPT, $options);
 }
 
-function plaatprotect_password_verify( $password, $hash) {
+function plaatdishes_password_verify( $password, $hash) {
 
 	return password_verify ( $password, $hash );
 }
@@ -86,7 +86,7 @@ function plaatprotect_password_verify( $password, $hash) {
  ********************************
  */
  
-function plaatprotect_log($text) {
+function plaatdishes_log($text) {
 
   $t = microtime(true);
   $micro = sprintf("%06d",($t - floor($t)) * 1000000);
@@ -102,7 +102,7 @@ function plaatprotect_log($text) {
 ** -----------
 */
 
-function plaatprotect_islocked() { 
+function plaatdishes_islocked() { 
     if( file_exists( LOCK_FILE ) ) { 
 
         $lockingPID = trim( file_get_contents( LOCK_FILE ) ); 
@@ -208,8 +208,8 @@ function general_header() {
 	global $session;
 
 	$sql  = 'select theme,language from session where ip="'.$ip.'"';
-	$result = plaatprotect_db_query($sql);
-	$row = plaatprotect_db_fetch_object($result);
+	$result = plaatdishes_db_query($sql);
+	$row = plaatdishes_db_fetch_object($result);
 		
 	$theme="light";
 	$lang="en";
@@ -239,23 +239,23 @@ function general_header() {
   $page .= '</head>';
   
   $page .= '<body>';
-  $page .= '<form id="plaatprotect" method="POST">';  
+  $page .= '<form id="plaatdishes" method="POST">';  
   
   $page .= '<input type="hidden" name="session" value="'.$session.'" />';
   
 	$page .= '<div class="language">';
 	if ($lang=="en") {
-		$page .= plaatprotect_normal_link('pid='.$pid.'&eid='.$eid.'&date='.$date.'&sid='.EVENT_LANGUAGE, t('DUTCH'));
+		$page .= plaatdishes_normal_link('pid='.$pid.'&eid='.$eid.'&date='.$date.'&sid='.EVENT_LANGUAGE, t('DUTCH'));
 	} else { 
-		$page .= plaatprotect_normal_link('pid='.$pid.'&eid='.$eid.'&date='.$date.'&sid='.EVENT_LANGUAGE , t('ENGLISH'));
+		$page .= plaatdishes_normal_link('pid='.$pid.'&eid='.$eid.'&date='.$date.'&sid='.EVENT_LANGUAGE , t('ENGLISH'));
 	}
 	$page .= '</div>';
 	
 	$page .= '<div class="theme">';
 	if ($theme == "light") {
-		$page .= plaatprotect_normal_link('pid='.$pid.'&eid='.$eid.'&date='.$date.'&sid='.EVENT_SCHEME, t('THEME_TO_DARK'));
+		$page .= plaatdishes_normal_link('pid='.$pid.'&eid='.$eid.'&date='.$date.'&sid='.EVENT_SCHEME, t('THEME_TO_DARK'));
 	} else {
-		$page .= plaatprotect_normal_link('pid='.$pid.'&eid='.$eid.'&date='.$date.'&sid='.EVENT_SCHEME, t('THEME_TO_LIGHT'));		
+		$page .= plaatdishes_normal_link('pid='.$pid.'&eid='.$eid.'&date='.$date.'&sid='.EVENT_SCHEME, t('THEME_TO_LIGHT'));		
 	}
 	$page .= '</div>';
    
@@ -271,7 +271,7 @@ function general_footer($time=0) {
 	$page = '';
 	
 	$page .= '<div class="copyright">'.t('LINK_COPYRIGHT') .' - '.t('TITLE').'<br/>';
-	$page .= '['.round($time*1000).' ms - '.plaatprotect_db_count().' queries]';
+	$page .= '['.round($time*1000).' ms - '.plaatdishes_db_count().' queries]';
 	$page .= '</div>';
 
 	$page .= '</form>';
@@ -305,7 +305,7 @@ function i ($name) {
 // NAVIGATION
 // ----------------------------
 
-function plaatprotect_get($label, $default) {
+function plaatdishes_get($label, $default) {
 	
 	$value = $default;
 	
@@ -321,7 +321,7 @@ function plaatprotect_get($label, $default) {
 /**
  * Process post parameters 
  */
-function plaatprotect_post($label, $default) {
+function plaatdishes_post($label, $default) {
 	
 	$value = $default;
 	
@@ -337,7 +337,7 @@ function plaatprotect_post($label, $default) {
 /** 
  * Encode link data
  */
-function plaatprotect_token_decode($token) {
+function plaatdishes_token_decode($token) {
 	
 	return htmlspecialchars_decode($token);
 }
@@ -345,7 +345,7 @@ function plaatprotect_token_decode($token) {
 /** 
  * Encode link data
  */
-function plaatprotect_token_encode($token) {
+function plaatdishes_token_encode($token) {
    
 	return htmlspecialchars($token);	
 }
@@ -353,9 +353,9 @@ function plaatprotect_token_encode($token) {
 /**
  * Create button like link 
  */
-function plaatprotect_link($parameters, $label, $title="") {
+function plaatdishes_link($parameters, $label, $title="") {
    	
-	$link  = '<a href="javascript:link(\''.plaatprotect_token_encode($parameters).'\');" class="link" ';			
+	$link  = '<a href="javascript:link(\''.plaatdishes_token_encode($parameters).'\');" class="link" ';			
 	
 	if (strlen($title)!=0) {
 		$link .= ' title="'.strtolower($title).'"';
@@ -368,9 +368,9 @@ function plaatprotect_link($parameters, $label, $title="") {
 /**
  * Create hidden link with popup
  */ 
-function plaatprotect_link_confirm($parameters, $label, $question="") {
+function plaatdishes_link_confirm($parameters, $label, $question="") {
    			
-	$link  = '<a href="javascript:show_confirm(\''.$question.'\',\''.plaatprotect_token_encode($parameters).'\');" class="link" ';
+	$link  = '<a href="javascript:show_confirm(\''.$question.'\',\''.plaatdishes_token_encode($parameters).'\');" class="link" ';
 	$link .= '>'.$label.'</a>';	
 		
 	return $link;
@@ -379,13 +379,13 @@ function plaatprotect_link_confirm($parameters, $label, $question="") {
 /**
  * Create hyperlink like link 
  */
-function plaatprotect_normal_link($parameters, $label, $id="", $title="") {
+function plaatdishes_normal_link($parameters, $label, $id="", $title="") {
    
 	global $link_counter;
 	
 	$link_counter++;
 	
-	$link  = '<a href="javascript:link(\''.plaatprotect_token_encode($parameters).'\');" class="normal_link" ';			
+	$link  = '<a href="javascript:link(\''.plaatdishes_token_encode($parameters).'\');" class="normal_link" ';			
 	if (strlen($id)!=0) {
 		$link .= ' id="'.strtolower($id).'"';
 	}
@@ -396,15 +396,15 @@ function plaatprotect_normal_link($parameters, $label, $id="", $title="") {
 	return $link;
 }
 
-function plaatprotect_create_path($path) {
+function plaatdishes_create_path($path) {
     if (is_dir($path)) return true;
     $prev_path = substr($path, 0, strrpos($path, '/', -2) + 1 );
-    $return = plaatprotect_create_path($prev_path);
+    $return = plaatdishes_create_path($prev_path);
     umask(0);
     return ($return && is_writable($prev_path)) ? mkdir($path, 0777) : false;
 }
 
-function plaatprotect_convert_date($date) {
+function plaatdishes_convert_date($date) {
 	return date("d-m-Y", strtotime($date));
 }
  

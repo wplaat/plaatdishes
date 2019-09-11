@@ -15,7 +15,7 @@
 */
 
 function link(value) {
-  var form = document.forms['plaatprotect'];
+  var form = document.forms['plaatdishes'];
   var newInput = document.createElement('input');
   newInput.setAttribute('type','hidden');
   newInput.setAttribute('name','token');

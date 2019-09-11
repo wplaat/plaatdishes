@@ -16,19 +16,14 @@
 **  All copyrights reserved (c) 1996-2019 PlaatSoft
 */
 
-/**
- * @file
- * @brief contain home page
- */
- 
 /*
 ** ---------------------
 ** PARAMETERS
 ** ---------------------
 */
 
-$name = plaatprotect_db_config_value('system_name', CATEGORY_GENERAL);
-$version = plaatprotect_db_config_value('database_version', CATEGORY_GENERAL);
+$name = plaatdishes_db_config_value('system_name', CATEGORY_GENERAL);
+$version = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
 
 /*
 ** ---------------------
@@ -36,13 +31,13 @@ $version = plaatprotect_db_config_value('database_version', CATEGORY_GENERAL);
 ** ---------------------
 */
 
-function plaatprotect_home_save_event() {
+function plaatdishes_home_save_event() {
 	
-	$user = plaatprotect_post("user", 0);
-	$task1 = plaatprotect_post("task1", 0);
-	$task2 = plaatprotect_post("task2", 0);
-	$task3 = plaatprotect_post("task3", 0);
-	$task4 = plaatprotect_post("task4", 0);
+	$user = plaatdishes_post("user", 0);
+	$task1 = plaatdishes_post("task1", 0);
+	$task2 = plaatdishes_post("task2", 0);
+	$task3 = plaatdishes_post("task3", 0);
+	$task4 = plaatdishes_post("task4", 0);
 	
 	if (($task1<0) && ($task1>2)) {
 		return;
@@ -64,24 +59,24 @@ function plaatprotect_home_save_event() {
 		return;
 	}
 	
-	plaatprotect_db_dishes_insert($user, $task1, $task2, $task3, $task4);
+	plaatdishes_db_dishes_insert($user, $task1, $task2, $task3, $task4);
 }
 
-function plaatprotect_home_login_event() {
+function plaatdishes_home_login_event() {
 
 	global $pid;
 	global $session;
 	global $ip;
 	
-	$password = plaatprotect_post("password", "");
-	$username = plaatprotect_post("username", "");
+	$password = plaatdishes_post("password", "");
+	$username = plaatdishes_post("username", "");
 			
-	$home_password = plaatprotect_db_config_value('home_password',CATEGORY_GENERAL);
-	$home_username = plaatprotect_db_config_value('home_username',CATEGORY_GENERAL);
+	$home_password = plaatdishes_db_config_value('home_password',CATEGORY_GENERAL);
+	$home_username = plaatdishes_db_config_value('home_username',CATEGORY_GENERAL);
 	
-	if (plaatprotect_password_verify($password, $home_password) && ($home_username==$username)) {
+	if (plaatdishes_password_verify($password, $home_password) && ($home_username==$username)) {
 	
-		$session = plaatprotect_db_get_session($ip, true);
+		$session = plaatdishes_db_get_session($ip, true);
 		$pid = PAGE_HOME;
 	} 
 }
@@ -117,9 +112,9 @@ function plaatdishes_users($pid=0) {
 	$page ='<select id="user" name="user" class="dropdown-select">';
 	
 	$sql = 'select pid, name from users order by pid';
-    $result = plaatprotect_db_query($sql);	
+    $result = plaatdishes_db_query($sql);	
 	
-	while ($data = plaatprotect_db_fetch_object($result)) {	
+	while ($data = plaatdishes_db_fetch_object($result)) {	
 		$page.='<option value="'.$data->pid.'"';
 		
 		if ($data->pid == $pid) {
@@ -138,7 +133,7 @@ function plaatdishes_users($pid=0) {
 ** ---------------------------------------------------------------- 
 */
 
-function plaatprotect_home_login_page() {
+function plaatdishes_home_login_page() {
 
 	// input	
 	global $id;
@@ -179,7 +174,7 @@ function plaatprotect_home_login_page() {
     return $page;
 }
 
-function plaatprotect_home_page() {
+function plaatdishes_home_page() {
 
 	// input	
 	global $pid;
@@ -212,8 +207,8 @@ function plaatprotect_home_page() {
 	$count = 0;
 	$user = 0;
 	$sql = 'select a.pid, sum(a.total) as total, b.name from dishes a, users b where a.pid=b.pid group by a.pid order by total';
-    $result = plaatprotect_db_query($sql);	
-    while ($data = plaatprotect_db_fetch_object($result)) {
+    $result = plaatdishes_db_query($sql);	
+    while ($data = plaatdishes_db_fetch_object($result)) {
 		$page .= '<tr>';
 		
 		$page .= '<td>';
@@ -229,10 +224,10 @@ function plaatprotect_home_page() {
 		$page .= '</td>';	
 		
 		$page .= '<td>';
-		$sql2 = 'select date from dishes where pid='.$data->pid.' order by did limit 0,1';
-		$result2 = plaatprotect_db_query($sql2);	
-		$data2 = plaatprotect_db_fetch_object($result2);
-		$page .= plaatprotect_convert_date($data2->date);
+		$sql2 = 'select date from dishes where pid='.$data->pid.' order by did desc limit 0,1';
+		$result2 = plaatdishes_db_query($sql2);	
+		$data2 = plaatdishes_db_fetch_object($result2);
+		$page .= plaatdishes_convert_date($data2->date);
 		$page .= '</td>';	
 		
 		$page .= '<td>';
@@ -285,13 +280,13 @@ function plaatprotect_home_page() {
 	$page .= '<br/>';
 	
 	$page .= '<p>';
-	$page .= plaatprotect_link('pid='.PAGE_HOME.'&eid='.EVENT_SAVE, t('LINK_SAVE'));
-	$page .= plaatprotect_link('pid='.PAGE_HOME_LOGIN, t('LINK_LOGOUT'));
+	$page .= plaatdishes_link('pid='.PAGE_HOME.'&eid='.EVENT_SAVE, t('LINK_SAVE'));
+	$page .= plaatdishes_link('pid='.PAGE_HOME_LOGIN, t('LINK_LOGOUT'));
 	$page .= '</p>';
 	
 	$page .= '</div>';
 			
-	$page .= plaatprotect_db_dishes_check();
+	$page .= plaatdishes_db_dishes_check();
 
 	$page .= '<div class="upgrade" id="upgrade"></div>';
 	$page .= '<script type="text/javascript" src="js/version1.js"></script>';
@@ -305,7 +300,7 @@ function plaatprotect_home_page() {
 ** ---------------------
 */
 
-function plaatprotect_home() {
+function plaatdishes_home() {
 
 	/* input */
 	global $pid;
@@ -316,11 +311,11 @@ function plaatprotect_home() {
 	switch ($eid) {
 	
 		case EVENT_SAVE:
-			plaatprotect_home_save_event();
+			plaatdishes_home_save_event();
 			break;	
 
 		case EVENT_LOGIN:
-			plaatprotect_home_login_event();
+			plaatdishes_home_login_event();
 			break;		
    }
 		
@@ -328,11 +323,11 @@ function plaatprotect_home() {
 	switch ($pid) {
 		
 		case PAGE_HOME_LOGIN:
-			return plaatprotect_home_login_page();
+			return plaatdishes_home_login_page();
 			break;
 			
 		case PAGE_HOME:
-			return plaatprotect_home_page();
+			return plaatdishes_home_page();
 			break;
 	}
 }

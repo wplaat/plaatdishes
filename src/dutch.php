@@ -51,7 +51,7 @@ $lang['LABEL_USERNAME'] = 'Gebruikersnaam';
 $lang['LABEL_PASSWORD'] = 'Wachtwoord';
 
 $lang ['CONGIG_BAD' ] = 'The following file "config.php" is missing in installation directory.<br/><br/>
-PlaatProtect can not  work without!<br/><br/>
+plaatdishes can not  work without!<br/><br/>
 Rename config.php.sample to config.inc, update the database settings en press F5 in your browser!';
 
 $lang['DATABASE_CONNECTION_FAILED' ] = 'The connection to the database failed. Please check if config.php settings are right!';
