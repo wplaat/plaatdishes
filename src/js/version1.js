@@ -1,6 +1,6 @@
 /* 
 **  ===========
-**  PlaatProtect
+**  PlaatDishes
 **  ===========
 **
 **  Created by wplaat
@@ -26,12 +26,12 @@ xmlhttp.onreadystatechange=function() {
    if (xmlhttp.readyState==4 && xmlhttp.status==200) 
    {		
 		var obj = JSON.parse(xmlhttp.responseText);
-		var latest = parseFloat(obj.PlaatProtect)
+		var latest = parseFloat(obj.PlaatDishes)
 		console.log("latest version = ["+latest+"]");
 		var current = parseFloat(document.getElementById("version").innerHTML);
 		console.log("current version = ["+current+"]");
 		if (current<latest) {
-			document.getElementById("upgrade").innerHTML = 'PlaatProtect v'+latest+' available!'; 
+			document.getElementById("upgrade").innerHTML = 'PlaatDishes v'+latest+' available!'; 
 		}
    }
 }

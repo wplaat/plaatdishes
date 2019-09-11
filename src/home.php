@@ -79,7 +79,7 @@ function plaatprotect_home_login_event() {
 	$home_password = plaatprotect_db_config_value('home_password',CATEGORY_GENERAL);
 	$home_username = plaatprotect_db_config_value('home_username',CATEGORY_GENERAL);
 	
-	if ($home_password==md5($password) && ($home_username==$username)) {
+	if (plaatprotect_password_verify($password, $home_password) && ($home_username==$username)) {
 	
 		$session = plaatprotect_db_get_session($ip, true);
 		$pid = PAGE_HOME;

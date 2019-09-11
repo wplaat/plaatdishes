@@ -59,6 +59,27 @@ define('EVENT_SAVE',                104);
 
 define('CATEGORY_GENERAL',           0);
 
+/*
+** ---------------------------------------------------------------- 
+** PASSWORD
+** ---------------------------------------------------------------- 
+*/
+
+function plaatprotect_password_hash($raw) {
+
+	$options = [
+		'cost' => 12,
+	];
+	return password_hash($raw, PASSWORD_BCRYPT, $options);
+}
+
+function plaatprotect_password_verify( $password, $hash) {
+
+	return password_verify ( $password, $hash );
+}
+
+
+
 /**
  ********************************
  * LOG
