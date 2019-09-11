@@ -282,11 +282,11 @@ function plaatprotect_db_get_session($ip, $new=false) {
 function plaatprotect_db_dishes_check() {
 
 	$page = "";
-	$sql = 'select did, date, pid, task1, task2, task3, task4, hash from dishes';
+	$sql = 'select did, date, pid, task1, task2, task3, task4, total, hash from dishes';
     $result = plaatprotect_db_query($sql);
     
 	while($data = plaatprotect_db_fetch_object($result)) {
-		$key = $data->date."-".$data->task1."-".$data->task2."-".$data->task3."-".$data->task4;
+		$key = $data->date."-".$data->pid."-".$data->task1."-".$data->task2."-".$data->task3."-".$data->task4."-".$data->total;
 		$hash = md5($key);
 			
 		if ($hash!=$data->hash) {
@@ -302,8 +302,8 @@ function plaatprotect_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
 	
 	$total = $task1 + $task2 + $task3 + $task4;
 	
-	$key = $date."-".$task1."-".$task2."-".$task3."-".$task4;
-		$hash = md5($key);
+	$key = $date."-".$pid."-".$task1."-".$task2."-".$task3."-".$task4."-".$total;
+	$hash = md5($key);
 	
     $query  = 'insert into dishes (date, pid, task1, task2, task3, task4, total, hash)';
 	$query .= 'values ("'.$date.'",'.$pid.','.$task1.','.$task2.','.$task3.','.$task4.','.$total.',"'.$hash.'")';
@@ -321,14 +321,14 @@ function plaatprotect_db_config_value($key, $category=CATEGORY_GENERAL) {
 
 	$value="";
 	
-   $sql = 'select value from config where token="'.$key.'" and category='.$category;
-   $result = plaatprotect_db_query($sql);
-   $data = plaatprotect_db_fetch_object($result);
+	$sql = 'select value from config where token="'.$key.'" and category='.$category;
+	$result = plaatprotect_db_query($sql);
+	$data = plaatprotect_db_fetch_object($result);
 
 	if (isset($data->value)) {
 		$value = $data ->value;
 	}
-			
+
    return $value;
 }
 
