@@ -60,6 +60,8 @@ function plaatdishes_home_save_event() {
 	}
 	
 	plaatdishes_db_dishes_insert($user, $task1, $task2, $task3, $task4);
+	
+	plaatdishes_email_notification();
 }
 
 function plaatdishes_home_login_event() {
@@ -111,7 +113,7 @@ function plaatdishes_users($pid=0) {
 
 	$page ='<select id="user" name="user" class="dropdown-select">';
 	
-	$sql = 'select pid, name from users order by pid';
+	$sql = 'select pid, name from users where active=1 order by pid ';
     $result = plaatdishes_db_query($sql);	
 	
 	while ($data = plaatdishes_db_fetch_object($result)) {	
@@ -199,14 +201,14 @@ function plaatdishes_home_page() {
 	$page .= '<tr>';
 	$page .= '<th>'.t('LABEL_ID').'</th>';
 	$page .= '<th>'.t('LABEL_NAME').'</th>';
-	$page .= '<th>'.t('LABEL_SCORE').'</th>';
+	$page .= '<th>'.t('LABEL_COINS').'</th>';
 	$page .= '<th>'.t('LABEL_DATE').'</th>';
 	$page .= '<th>'.t('LABEL_EXTRA').'</th>';
 	$page .= '</tr>';
 		
 	$count = 0;
 	$user = 0;
-	$sql = 'select a.pid, sum(a.total) as total, b.name from dishes a, users b where a.pid=b.pid group by a.pid order by total';
+	$sql = 'select a.pid, sum(a.total) as total, b.name from dishes a, users b where a.pid=b.pid and b.active=1 group by a.pid order by total';
     $result = plaatdishes_db_query($sql);	
     while ($data = plaatdishes_db_fetch_object($result)) {
 		$page .= '<tr>';

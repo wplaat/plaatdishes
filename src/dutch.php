@@ -68,7 +68,7 @@ $lang['LABEL_SCORE'] = 'Score';
 $lang['LABEL_DATE'] = 'Datum';
 $lang['LABEL_EXTRA'] = 'Extra';
 
-$lang['LABEL_DISH_HELPER'] = 'Afwas hulp';
+$lang['LABEL_DISH_HELPER'] = 'Volgende afwashulp';
 
 $lang['LABEL_DISH_SIZE'] = 'Vaat grootte';
 

@@ -210,6 +210,7 @@ switch ($pid) {
 		
 	case PAGE_HOME: 
 	case PAGE_HOME_LOGIN: 
+		include "email.php";
 		include "home.php";
 		$page = plaatdishes_home();
 		break;
