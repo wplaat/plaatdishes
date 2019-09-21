@@ -199,7 +199,6 @@ function plaatdishes_home_page() {
 		
 	$page .= '<table>';
 	$page .= '<tr>';
-	$page .= '<th>'.t('LABEL_ID').'</th>';
 	$page .= '<th>'.t('LABEL_NAME').'</th>';
 	$page .= '<th>'.t('LABEL_COINS').'</th>';
 	$page .= '<th>'.t('LABEL_DATE').'</th>';
@@ -212,11 +211,7 @@ function plaatdishes_home_page() {
     $result = plaatdishes_db_query($sql);	
     while ($data = plaatdishes_db_fetch_object($result)) {
 		$page .= '<tr>';
-		
-		$page .= '<td>';
-		$page .= $data->pid;
-		$page .= '</td>';
-		
+				
 		$page .= '<td>';
 		$page .= $data->name;
 		$page .= '</td>';		

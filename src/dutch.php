@@ -62,11 +62,12 @@ $lang['DATABASE_CONNECTION_FAILED' ] = 'The connection to the database failed. P
 ** ------------------
 */
 
-$lang['LABEL_ID'] = 'ID';
+$lang['LABEL_ID'] = 'Id';
 $lang['LABEL_NAME'] = 'Naam';
-$lang['LABEL_SCORE'] = 'Score';
+$lang['LABEL_COINS'] = 'Punten';
 $lang['LABEL_DATE'] = 'Datum';
 $lang['LABEL_EXTRA'] = 'Extra';
+$lang['LABEL_OVERVIEW'] = 'Overzicht';
 
 $lang['LABEL_DISH_HELPER'] = 'Volgende afwashulp';
 
