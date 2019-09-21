@@ -42,15 +42,16 @@ function plaatdishes_email_notification() {
 
 	$body .= '<table>';
 	$body .= '<tr>';
-	$body .= '<th width="25%" align="left">'.t('LABEL_NAME').'</th>';
-	$body .= '<th width="25%" align="left">'.t('LABEL_COINS').'</th>';
+	$body .= '<th width="15%" align="left">'.t('LABEL_NAME').'</th>';
+	$body .= '<th width="15%" align="left">'.t('LABEL_COINS').'</th>';
+	$body .= '<th width="15%" align="left">'.t('LABEL_AMOUNT').'</th>';
 	$body .= '<th width="25%" align="left">'.t('LABEL_DATE').'</th>';
-	$body .= '<th width="25%" align="left">'.t('LABEL_EXTRA').'</th>';
+	$body .= '<th width="30%" align="left">'.t('LABEL_EXTRA').'</th>';
 	$body .= '</tr>';
 		
 	$count=0;
 		
-	$sql = 'select a.pid, sum(a.total) as total, b.name from dishes a, users b where a.pid=b.pid and b.active=1 group by a.pid order by total';
+	$sql = 'select a.pid, sum(a.total) as total, count(a.pid) as amount, b.name from dishes a, users b where a.pid=b.pid and b.active=1 group by a.pid order by total';
 	$result = plaatdishes_db_query($sql);	
 	while ($data = plaatdishes_db_fetch_object($result)) {
 	
@@ -63,6 +64,10 @@ function plaatdishes_email_notification() {
 		$body .= '<td>';
 		$body .= $data->total;
 		$body .= '</td>';	
+		
+		$body .= '<td>';
+		$body .= $data->amount;
+		$body .= '</td>';
 	
 		$body .= '<td>';
 		$sql2 = 'select date from dishes where pid='.$data->pid.' order by did desc limit 0,1';

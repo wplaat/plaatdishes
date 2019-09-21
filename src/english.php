@@ -66,6 +66,7 @@ $lang['LABEL_ID'] = 'Id';
 $lang['LABEL_NAME'] = 'Name';
 $lang['LABEL_COINS'] = 'Coins';
 $lang['LABEL_DATE'] = 'Date';
+$lang['LABEL_AMOUNT'] = 'Amount';
 $lang['LABEL_EXTRA'] = 'Extra';
 $lang['LABEL_OVERVIEW'] = 'Overview';
 

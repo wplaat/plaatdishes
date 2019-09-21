@@ -201,13 +201,14 @@ function plaatdishes_home_page() {
 	$page .= '<tr>';
 	$page .= '<th>'.t('LABEL_NAME').'</th>';
 	$page .= '<th>'.t('LABEL_COINS').'</th>';
+	$page .= '<th>'.t('LABEL_AMOUNT').'</th>';
 	$page .= '<th>'.t('LABEL_DATE').'</th>';
 	$page .= '<th>'.t('LABEL_EXTRA').'</th>';
 	$page .= '</tr>';
 		
 	$count = 0;
 	$user = 0;
-	$sql = 'select a.pid, sum(a.total) as total, b.name from dishes a, users b where a.pid=b.pid and b.active=1 group by a.pid order by total';
+	$sql = 'select a.pid, sum(a.total) as total, count(a.pid) as amount, b.name from dishes a, users b where a.pid=b.pid and b.active=1 group by a.pid order by total';
     $result = plaatdishes_db_query($sql);	
     while ($data = plaatdishes_db_fetch_object($result)) {
 		$page .= '<tr>';
@@ -218,6 +219,10 @@ function plaatdishes_home_page() {
 		
 		$page .= '<td>';
 		$page .= $data->total;
+		$page .= '</td>';	
+		
+		$page .= '<td>';
+		$page .= $data->amount;
 		$page .= '</td>';	
 		
 		$page .= '<td>';

@@ -90,10 +90,15 @@ h3 {
 	 margin: 4px 0px;
 }
 
+tr {
+	text-align: left
+}
+
 th {
-   font-size: 1.2em;
+   font-size: 1.0em;
    padding: 10px 0px;
    font-style: italic;
+   text-align: left
 }
 
 table {
@@ -102,7 +107,7 @@ table {
 }
 
 td {
-   padding-left: 20px;
+   padding-right: 50px;  
 }
 
 td > a{
