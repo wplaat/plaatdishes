@@ -16,11 +16,6 @@
 **  All copyrights reserved (c) 1996-2019 PlaatSoft
 */
 
-/**
- * @file
- * @brief contain general page and event handler
- */
-
 $time_start = microtime(true);
 
 include "general.php";
@@ -213,6 +208,16 @@ switch ($pid) {
 		include "email.php";
 		include "home.php";
 		$page = plaatdishes_home();
+		break;
+		
+	case PAGE_RELEASE_NOTES:
+		include "release_notes.php";
+		$page = plaatdishes_release_notes();
+		break;
+		
+	case PAGE_OVERVIEW:
+		include "overview.php";
+		$page = plaatdishes_overview();
 		break;
 }
 

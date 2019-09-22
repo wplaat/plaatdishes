@@ -251,29 +251,33 @@ function plaatdishes_home_page() {
 	$page .= '<table>';
 	$page .= '<tr>';
 	
-	$page .= '<td>';
+	$page .= '<td style="padding-right: 10px;">';
 	$page .= t('LABEL_NAME').': ';
 	$page .= plaatdishes_users($user);
 	$page .= '</td>';
 	
-	$page .= '<td>';
+	$page .= '<td style="padding-right: 10px;">';
 	$page .= t('LABEL_DISH_SIZE').': ';
 	$page .= plaatdishes_task(1, 0);
 	$page .= '</td>';
 	
-	$page .= '<td>';
+	$page .= '<td style="padding-right: 10px;">';
 	$page .= t('LABEL_PREPARE_QUALITY').': ';
 	$page .= plaatdishes_task(2, 0);
 	$page .= '</td>';
 	
-	$page .= '<td>';
+	$page .= '<td style="padding-right: 10px;">';
 	$page .= t('LABEL_CLEANING_QUALITY').': ';
 	$page .= plaatdishes_task(3, 0);
 	$page .= '</td>';
 	
-	$page .= '<td>';
+	$page .= '<td style="padding-right: 10px;">';
 	$page .= t('LABEL_CLEANUP_QUALITY').': ';
 	$page .= plaatdishes_task(4, 0);
+	$page .= '</td>';
+	
+	$page .= '<td style="padding-right: 10px;">';	
+	$page .= plaatdishes_link('pid='.PAGE_HOME.'&eid='.EVENT_SAVE, t('LINK_SAVE'));
 	$page .= '</td>';
 	
 	$page .= '</tr>';
@@ -282,8 +286,9 @@ function plaatdishes_home_page() {
 	$page .= '<br/>';
 	
 	$page .= '<p>';
-	$page .= plaatdishes_link('pid='.PAGE_HOME.'&eid='.EVENT_SAVE, t('LINK_SAVE'));
-	$page .= plaatdishes_link('pid='.PAGE_HOME_LOGIN, t('LINK_LOGOUT'));
+	$page .= plaatdishes_link('pid='.PAGE_OVERVIEW, t('LINK_OVERVIEW'));	
+	$page .= plaatdishes_link('pid='.PAGE_RELEASE_NOTES, t('LINK_RELEASE_NOTES'));	
+	//$page .= plaatdishes_link('pid='.PAGE_HOME_LOGIN, t('LINK_LOGOUT'));
 	$page .= '</p>';
 	
 	$page .= '</div>';

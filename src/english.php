@@ -40,6 +40,10 @@ $lang['LINK_SAVE']          = i('edit') . 'Save';
 $lang['LINK_CANCEL']        = i('times') . 'Cancel';
 $lang['LINK_LOGIN']         = 'Login';
 $lang['LINK_LOGOUT']        = 'Logout';
+$lang['LINK_PREV']          = 'Previous';
+$lang['LINK_NEXT']          = 'Next';
+$lang['LINK_RELEASE_NOTES'] = 'Release Notes';
+$lang['LINK_OVERVIEW']      = 'Overview';
 
 /*
 ** ------------------
@@ -64,7 +68,7 @@ $lang['DATABASE_CONNECTION_FAILED' ] = 'The connection to the database failed. P
 
 $lang['LABEL_ID'] = 'Id';
 $lang['LABEL_NAME'] = 'Name';
-$lang['LABEL_COINS'] = 'Coins';
+$lang['LABEL_COINS'] = 'Score';
 $lang['LABEL_DATE'] = 'Date';
 $lang['LABEL_AMOUNT'] = 'Amount';
 $lang['LABEL_EXTRA'] = 'Extra';
@@ -73,7 +77,6 @@ $lang['LABEL_OVERVIEW'] = 'Overview';
 $lang['LABEL_DISH_HELPER'] = 'Next Dish cleaner';
 
 $lang['LABEL_DISH_SIZE'] = 'Dish Size';
-
 $lang['LABEL_PREPARE_QUALITY'] = 'Prepare Quality';
 $lang['LABEL_CLEANING_QUALITY'] = 'Dish Cleaning Quality';
 $lang['LABEL_CLEANUP_QUALITY'] = 'Cleanup Quality';

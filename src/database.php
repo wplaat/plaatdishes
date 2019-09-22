@@ -16,11 +16,6 @@
 **  All copyrights reserved (c) 1996-2019 PlaatSoft
 */
 
-/**
- * @file
- * @brief contain database logic
- */
- 
 /*
 ** ---------------------
 ** SETTINGS
@@ -309,6 +304,19 @@ function plaatdishes_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
 	$query .= 'values ("'.$date.'",'.$pid.','.$task1.','.$task2.','.$task3.','.$task4.','.$total.',"'.$hash.'")';
 			
 	return plaatdishes_db_query($query);
+}
+
+/*
+** ---------------------
+** USERS
+** ---------------------
+*/
+
+function plaatdishes_db_users($pid) {
+
+	$sql = 'select pid, name, email, active where pid='.$pid;
+	$result = plaatdishes_db_query($sql);
+	return  plaatdishes_db_fetch_object($result);
 }
 
 /*

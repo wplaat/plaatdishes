@@ -40,6 +40,10 @@ $lang['LINK_SAVE']          = i('edit') . 'Bewaar';
 $lang['LINK_CANCEL']        = i('times') . 'Cancel';
 $lang['LINK_LOGIN']         = 'Login';
 $lang['LINK_LOGOUT']        = 'Logout';
+$lang['LINK_PREV']          = 'Vorige';
+$lang['LINK_NEXT']          = 'Volgende';
+$lang['LINK_RELEASE_NOTES'] = 'Release Notes';
+$lang['LINK_OVERVIEW']      = 'Overzicht';
 
 /*
 ** ------------------
@@ -73,7 +77,6 @@ $lang['LABEL_OVERVIEW'] = 'Overzicht';
 $lang['LABEL_DISH_HELPER'] = 'Volgende afwashulp';
 
 $lang['LABEL_DISH_SIZE'] = 'Vaat grootte';
-
 $lang['LABEL_PREPARE_QUALITY'] = 'Afruim kwaliteit';
 $lang['LABEL_CLEANING_QUALITY'] = 'Afwas kwaliteit';
 $lang['LABEL_CLEANUP_QUALITY'] = 'Opruim kwaliteit';

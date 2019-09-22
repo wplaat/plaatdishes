@@ -16,11 +16,6 @@
 **  All copyrights reserved (c) 1996-2019 PlaatSoft
 */
 
-/**
- * @file
- * @brief contain general logic
- */
-
 /*
 ** -----------
 ** DIRECTORY
@@ -38,6 +33,8 @@ define('BASE_DIR', '/var/www/html/plaatdishes');
 
 define('PAGE_HOME_LOGIN',           10);
 define('PAGE_HOME',                 11);
+define('PAGE_RELEASE_NOTES',        12);
+define('PAGE_OVERVIEW',             13);
 
 /*
 ** -----------
@@ -50,6 +47,8 @@ define('EVENT_LOGIN',               101);
 define('EVENT_SCHEME',              102);
 define('EVENT_LANGUAGE',            103);
 define('EVENT_SAVE',                104);
+define('EVENT_NEXT',                105);
+define('EVENT_PREV',                106);
 
 /*
 ** -----------
@@ -77,8 +76,6 @@ function plaatdishes_password_verify( $password, $hash) {
 
 	return password_verify ( $password, $hash );
 }
-
-
 
 /**
  ********************************
