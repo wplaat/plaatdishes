@@ -226,7 +226,7 @@ function plaatdishes_home_page() {
 		$page .= '</td>';	
 		
 		$page .= '<td>';
-		$sql2 = 'select date from dishes where pid='.$data->pid.' order by did desc limit 0,1';
+		$sql2 = 'select date from dishes where pid='.$data->pid.' order by date desc limit 0,1';
 		$result2 = plaatdishes_db_query($sql2);	
 		$data2 = plaatdishes_db_fetch_object($result2);
 		$page .= plaatdishes_convert_date($data2->date);

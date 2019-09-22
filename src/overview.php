@@ -36,7 +36,7 @@ function plaatdishes_overview_page() {
 	$step = 60*60*24;
 	$data = "";
 	
-	for ($i=62; $i>=0; $i--) {
+	for ($i=31; $i>=0; $i--) {
 		
 		$sql1 = 'select pid from users where active=1 order by pid';
 		$result1 = plaatdishes_db_query($sql1);
