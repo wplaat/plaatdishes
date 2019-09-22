@@ -217,19 +217,25 @@ function plaatdishes_db_execute_sql_file($version) {
  * Check db version and upgrade if needed!
  */
 function plaatdishes_db_check_version() {
-
-   // Execute SQL base sql script if needed!
-   $sql = "select 1 FROM config limit 1" ;
-   $result = plaatdishes_db_query($sql);
-   if (!$result)  {
-      plaatdishes_db_execute_sql_file("0.1");
-   }
+	
+	// Execute SQL base sql script if needed!
+	$sql = "select 1 FROM config limit 1" ;
+	$result = plaatdishes_db_query($sql);
+	if (!$result)  {
+		plaatdishes_db_execute_sql_file("0.1");
+	}
 		
 	// Execute SQL path script v0.2 if needed
 	$value = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
-   if ($value=="0.1")  { 
+	if ($value=="0.1")  { 
 		plaatdishes_db_execute_sql_file("0.2");
-   }
+	}
+   
+	// Execute SQL path script v0.2 if needed
+	$value = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
+	if ($value=="0.2")  { 
+		plaatdishes_db_execute_sql_file("0.3");
+	}
 }
 
 /*
