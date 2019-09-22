@@ -1,2 +1,2 @@
 # plaatdishes
-App to select who must do the dishes watching every day
+App to select who must do the dishes watches today
