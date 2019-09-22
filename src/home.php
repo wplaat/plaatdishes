@@ -208,7 +208,7 @@ function plaatdishes_home_page() {
 		
 	$count = 0;
 	$user = 0;
-	$sql = 'select a.pid, sum(a.total) as total, count(a.pid) as amount, b.name from dishes a, users b where a.pid=b.pid and b.active=1 group by a.pid order by total';
+	$sql = 'select a.pid, sum(a.total) as total, count(a.pid) as amount, b.name from dishes a, users b where a.pid=b.pid and b.active=1 and a.total>0 group by a.pid order by total';
     $result = plaatdishes_db_query($sql);	
     while ($data = plaatdishes_db_fetch_object($result)) {
 		$page .= '<tr>';
