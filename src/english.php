@@ -44,6 +44,7 @@ $lang['LINK_PREV']          = 'Previous';
 $lang['LINK_NEXT']          = 'Next';
 $lang['LINK_RELEASE_NOTES'] = 'Release Notes';
 $lang['LINK_OVERVIEW']      = 'Overview';
+$lang['LINK_USERS']         = 'Users';
 
 /*
 ** ------------------
@@ -80,6 +81,28 @@ $lang['LABEL_DISH_SIZE'] = 'Dish Size';
 $lang['LABEL_PREPARE_QUALITY'] = 'Prepare Quality';
 $lang['LABEL_CLEANING_QUALITY'] = 'Dish Cleaning Quality';
 $lang['LABEL_CLEANUP_QUALITY'] = 'Cleanup Quality';
+
+/*
+** ------------------
+** USERS
+** ------------------
+*/
+
+$lang['LABEL_USERS'] = 'Users';
+$lang['LABEL_USER'] = 'User';
+
+$lang['LABEL_EMAIL'] = 'Email';
+$lang['LABEL_ACTIVE'] = 'Active';
+$lang['LABEL_LAST_LOGIN'] = 'Last Login';
+$lang['LABEL_ADMIN'] = 'Admin';
+
+
+$lang['NAME_TO_SHORT'] = 'Name to short';
+$lang['EMAIL_INVALID'] = 'Email invalid';
+$lang['USERNAME_TO_SHORT'] = 'Username to short';
+$lang['USERNAME_EXIST'] = 'Username exist';
+$lang['PASSWORD_TO_SHORT'] = 'Password to short';
+$lang['USER_SAVED'] = 'User information saved';
 
 /*
 ** ------------------

@@ -231,10 +231,16 @@ function plaatdishes_db_check_version() {
 		plaatdishes_db_execute_sql_file("0.2");
 	}
    
-	// Execute SQL path script v0.2 if needed
+	// Execute SQL path script v0.3 if needed
 	$value = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
 	if ($value=="0.2")  { 
 		plaatdishes_db_execute_sql_file("0.3");
+	}
+	
+	// Execute SQL path script v0.3 if needed
+	$value = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
+	if ($value=="0.3")  { 
+		plaatdishes_db_execute_sql_file("0.4");
 	}
 }
 
@@ -283,11 +289,11 @@ function plaatdishes_db_get_session($ip, $new=false) {
 function plaatdishes_db_dishes_check() {
 
 	$page = "";
-	$sql = 'select did, date, pid, task1, task2, task3, task4, total, hash from dishes';
+	$sql = 'select did, date, uid, task1, task2, task3, task4, total, hash from dishes';
     $result = plaatdishes_db_query($sql);
     
 	while($data = plaatdishes_db_fetch_object($result)) {
-		$key = $data->date."-".$data->pid."-".$data->task1."-".$data->task2."-".$data->task3."-".$data->task4."-".$data->total;
+		$key = $data->date."-".$data->uid."-".$data->task1."-".$data->task2."-".$data->task3."-".$data->task4."-".$data->total;
 		$hash = md5($key);
 			
 		if ($hash!=$data->hash) {
@@ -297,17 +303,17 @@ function plaatdishes_db_dishes_check() {
     return $page;
 }
    
-function plaatdishes_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
+function plaatdishes_db_dishes_insert($uid, $task1, $task2, $task3, $task4) {
  
     $date = date('Y-m-d');
 	
 	$total = $task1 + $task2 + $task3 + $task4;
 	
-	$key = $date."-".$pid."-".$task1."-".$task2."-".$task3."-".$task4."-".$total;
+	$key = $date."-".$uid."-".$task1."-".$task2."-".$task3."-".$task4."-".$total;
 	$hash = md5($key);
 	
-    $query  = 'insert into dishes (date, pid, task1, task2, task3, task4, total, hash)';
-	$query .= 'values ("'.$date.'",'.$pid.','.$task1.','.$task2.','.$task3.','.$task4.','.$total.',"'.$hash.'")';
+    $query  = 'insert into dishes (date, uid, task1, task2, task3, task4, total, hash)';
+	$query .= 'values ("'.$date.'",'.$uid.','.$task1.','.$task2.','.$task3.','.$task4.','.$total.',"'.$hash.'")';
 			
 	return plaatdishes_db_query($query);
 }
@@ -318,11 +324,62 @@ function plaatdishes_db_dishes_insert($pid, $task1, $task2, $task3, $task4) {
 ** ---------------------
 */
 
-function plaatdishes_db_users($pid) {
+function plaatdishes_db_users_id($username, $password) {
 
-	$sql = 'select pid, name, email, active where pid='.$pid;
+	$uid=0;
+
+	$query  = 'select uid, password from users where username="'.$username.'"' ;	
+		
+	$result = plaatdishes_db_query($query);
+	$data = plaatdishes_db_fetch_object($result);
+	if (isset($data->uid)) {	
+		
+		if (plaatdishes_password_verify($password, $data->password)) {
+			$uid = $data->uid;
+			
+		}
+	}	
+	
+	return $uid;
+}
+
+function plaatdishes_db_users_insert($username, $password) {
+
+	$query  = 'insert into users (name, email, active, username, password, admin) ';
+	$query .= 'values ("'.$name.'","'.$email.'",'.$active.',"'.$username.'","'.plaatdishes_password_hash($password).'",'.$admin.')';
+	plaatdishes_db_query($query);
+		
+	$uid = plaatdishes_db_user_id($username, $password);	
+
+	return $uid;
+}
+
+function plaatdishes_db_users($uid) {
+
+	$sql = 'select uid, name, email, active, username, last_login, admin from users where uid='.$uid;
 	$result = plaatdishes_db_query($sql);
+	
 	return  plaatdishes_db_fetch_object($result);
+}
+
+function plaatdishes_db_users_update($data) {
+		
+	$query  = 'update users set '; 
+	$query .= 'name="'.$data->name.'",';
+	$query .= 'email="'.$data->email.'",';
+	$query .= 'last_login="'.$data->last_login.'" ';
+	$query .= 'where uid='.$data->uid; 
+	
+	plaatdishes_db_query($query);
+}
+
+function plaatdishes_db_users_update2($uid, $password) {
+		
+	$query  = 'update users set '; 
+	$query .= 'password="'.plaatdishes_password_hash($password).'" ';
+	$query .= 'where uid='.$data->uid; 
+	
+	plaatdishes_db_query($query);
 }
 
 /*

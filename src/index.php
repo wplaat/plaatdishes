@@ -219,6 +219,12 @@ switch ($pid) {
 		include "overview.php";
 		$page = plaatdishes_overview();
 		break;
+		
+	case PAGE_USERS:
+	case PAGE_USER:
+		include "users.php";
+		$page = plaatdishes_users();
+		break;
 }
 
 

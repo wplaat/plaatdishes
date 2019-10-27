@@ -35,6 +35,8 @@ define('PAGE_HOME_LOGIN',           10);
 define('PAGE_HOME',                 11);
 define('PAGE_RELEASE_NOTES',        12);
 define('PAGE_OVERVIEW',             13);
+define('PAGE_USERS',                14);
+define('PAGE_USER',                 15);
 
 /*
 ** -----------
@@ -49,6 +51,7 @@ define('EVENT_LANGUAGE',            103);
 define('EVENT_SAVE',                104);
 define('EVENT_NEXT',                105);
 define('EVENT_PREV',                106);
+define('EVENT_EDIT',                107);
 
 /*
 ** -----------
@@ -404,7 +407,53 @@ function plaatdishes_create_path($path) {
 function plaatdishes_convert_date($date) {
 	return date("d-m-Y", strtotime($date));
 }
- 
+
+function plaatdishes_ui_input($name, $size, $maxlength, $value, $readonly=false) {
+	
+	$page  = '<input ';
+	$page .= 'type="text" ';
+	$page .= 'id="'.$name.'" ';
+	$page .= 'name="'.$name.'" ';
+	$page .= 'value="'.$value.'" ';
+	$page .= 'size='.$size.' ';
+	$page .= 'maxlength='.$maxlength.' ';
+	
+	if ($readonly==true) {
+		$page .= 'disabled="true" ';
+	}
+	
+	$page .= '/>';
+
+	return $page;
+}
+
+function plaatdishes_ui_checkbox($name, $value, $readonly=false) {
+
+	$tmp = '<input type="checkbox" name="'.$name.'" id="'.$name.'" value="1" ';
+	
+	if ($value==1) {
+		$tmp .= ' checked="checked"';
+	} 
+	
+	if ($readonly==1) {
+		$tmp .= ' disabled="true"';
+	} 
+	
+	$tmp .= '/>';
+	
+	return $tmp;	
+}
+
+/**
+ * Function valid email address
+ * @return true or false
+ */
+function validate_email($address) {
+
+   return !preg_match("/[A-Za-z0-9_-]+([\.]{1}[A-Za-z0-9_-]+)*@[A-Za-z0-9-]+([\.]{1}[A-Za-z0-9-]+)+/",$address);
+}
+
+
 // ----------------------------
 // THE END
 // ----------------------------
