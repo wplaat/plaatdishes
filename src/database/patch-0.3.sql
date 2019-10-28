@@ -16,3 +16,17 @@
 
 UPDATE config SET value="0.3" WHERE token='database_version';
 
+ALTER TABLE `users` ADD `username` VARCHAR(20) NOT NULL AFTER `active`;
+ALTER TABLE `users` ADD `password` VARCHAR(250) NOT NULL AFTER `username`;
+ALTER TABLE `users` ADD `last_login` DATETIME NOT NULL AFTER `password`;
+ALTER TABLE `users` ADD `admin` INT NOT NULL AFTER `last_login`;
+ALTER TABLE `users` CHANGE `pid` `uid` INT(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `users` ADD `sid` INT NOT NULL AFTER `admin`;
+
+ALTER TABLE `dishes` CHANGE `pid` `uid` INT(11) NOT NULL;
+
+DELETE FROM config WHERE token = 'home_username';
+DELETE FROM config WHERE token = 'home_password';
+
+ALTER TABLE `session` ADD `uid` INT NOT NULL AFTER `ip`;
+

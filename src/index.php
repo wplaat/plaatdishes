@@ -77,7 +77,6 @@ $ip = $_SERVER['REMOTE_ADDR'];
 $eid = EVENT_NONE;
 $sid = EVENT_NONE;
 $pid = PAGE_HOME;
-$login_uid = 0;
 
 $date = date('Y-m-d');
 $limit = 0;
@@ -111,9 +110,7 @@ $session_id = plaatdishes_db_get_session($ip);
 if ((strlen($session_id)==0) || ($session!=$session_id)) {
 	// User not login, Redirect to login page
 	$pid = PAGE_HOME_LOGIN;
-}
-
-echo $login_uid;
+} 
 
 /*
 ** -------------------

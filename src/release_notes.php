@@ -22,17 +22,11 @@
 ** ---------------------
 */
 
-$note[4] = '<div class="subparagraph">Version 0.4 (28-10-2019)</div>
-<div class="large_text">
-<ul>
-<li>Added users managed page</li>
-</ul>
-</div>';
-
-$note[3] = '<div class="subparagraph">Version 0.3 (22-09-2019)</div>
+$note[3] = '<div class="subparagraph">Version 0.3 (28-10-2019)</div>
 <div class="large_text">
 <ul>
 <li>Added icon</li>
+<li>Added users managed page</li>
 </ul>
 </div>';
 
