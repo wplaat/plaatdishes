@@ -52,6 +52,7 @@ define('EVENT_SAVE',                104);
 define('EVENT_NEXT',                105);
 define('EVENT_PREV',                106);
 define('EVENT_EDIT',                107);
+define('EVENT_SAVE_PASSWORD',       108);
 
 /*
 ** -----------

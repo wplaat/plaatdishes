@@ -51,7 +51,7 @@ function plaatdishes_email_notification() {
 		
 	$count=0;
 		
-	$sql = 'select a.pid, sum(a.total) as total, count(a.pid) as amount, b.name from dishes a, users b where a.pid=b.pid and b.active=1 and a.total>0 group by a.pid order by total';
+	$sql = 'select a.uid, sum(a.total) as total, count(a.uid) as amount, b.name from dishes a, users b where a.uid=b.uid and b.active=1 and a.total>0 group by a.uid order by total';
 	$result = plaatdishes_db_query($sql);	
 	while ($data = plaatdishes_db_fetch_object($result)) {
 	
@@ -70,7 +70,7 @@ function plaatdishes_email_notification() {
 		$body .= '</td>';
 	
 		$body .= '<td>';
-		$sql2 = 'select date from dishes where pid='.$data->pid.' order by date desc limit 0,1';
+		$sql2 = 'select date from dishes where uid='.$data->uid.' order by date desc limit 0,1';
 		$result2 = plaatdishes_db_query($sql2);	
 		$data2 = plaatdishes_db_fetch_object($result2);
 		$body .= plaatdishes_convert_date($data2->date);
@@ -79,7 +79,7 @@ function plaatdishes_email_notification() {
 		$body .= '<td>';
 		if ($count==0) {
 			$body .= t('LABEL_DISH_HELPER');
-			$user = $data->pid;
+			$user = $data->uid;
 			$count=1;
 		} 
 		$body .= '</td>';		

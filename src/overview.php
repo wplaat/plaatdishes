@@ -24,8 +24,8 @@
 
 function plaatdishes_overview_page() {
 
-// input
-	global $pid;
+	// input
+	global $uid;
 	global $date;
 		
 	list($year, $month, $day) = explode("-", $date);	
@@ -38,14 +38,14 @@ function plaatdishes_overview_page() {
 	
 	for ($i=31; $i>=0; $i--) {
 		
-		$sql1 = 'select pid from users where active=1 order by pid';
+		$sql1 = 'select uid from users where active=1 order by uid';
 		$result1 = plaatdishes_db_query($sql1);
 		
 		$first=true;
 		while ($row1 = plaatdishes_db_fetch_object($result1)) {
 			
 			$timestamp = date("Y-m-d", $current_date-($step*$i));	
-			$sql2 = 'select date, sum(total) as total from dishes where date<="'.$timestamp.'" and pid='.$row1->pid;		
+			$sql2 = 'select date, sum(total) as total from dishes where date<="'.$timestamp.'" and uid='.$row1->uid;		
 			$result2 = plaatdishes_db_query($sql2);
 					
 			while ($row2 = plaatdishes_db_fetch_object($result2)) {
@@ -73,7 +73,7 @@ function plaatdishes_overview_page() {
 	if (strlen($data)==0) {
 		$data .= '["00-00-0000"';
 		
-		$sql1 = 'select pid from users where active=1 order by pid';
+		$sql1 = 'select uid from users where active=1 order by uid';
 		$result1 = plaatdishes_db_query($sql1);
 		while ($node = plaatdishes_db_fetch_object($result1)) {
 			$data .= ',null';
@@ -94,7 +94,7 @@ function plaatdishes_overview_page() {
 				var data = new google.visualization.DataTable();
 				data.addColumn("string", "Date");';
 				
-				$sql3 = 'select pid, name from users where active=1 order by pid';
+				$sql3 = 'select uid, name from users where active=1 order by uid';
 				$result3 = plaatdishes_db_query($sql3);	
 				while ($node = plaatdishes_db_fetch_object($result3)) {				
 					$page .= 'data.addColumn("number","'.$node->name.'"); ';

@@ -77,10 +77,11 @@ $ip = $_SERVER['REMOTE_ADDR'];
 $eid = EVENT_NONE;
 $sid = EVENT_NONE;
 $pid = PAGE_HOME;
+$login_uid = 0;
 
 $date = date('Y-m-d');
 $limit = 0;
-$cat=0;
+$cat = 0;
 
 $session = plaatdishes_post('session', '');
 $token = plaatdishes_post("token", "");
@@ -94,7 +95,7 @@ if (strlen($token)>0) {
   foreach ($tokens as $item) {
      $items = preg_split ("/=/", $item);				
      ${$items[0]} = $items[1];	
-     //echo '>'.$items[0].'='.$items[1].'<br/>';
+     //echo $items[0].'='.$items[1].' ';
   }
 }
 
@@ -104,17 +105,15 @@ if (strlen($token)>0) {
 ** --------------------------------------
 */
 
-$home_password = plaatdishes_db_config_value('home_password',CATEGORY_GENERAL);
-
 // Create for each visitor an account (without session_id)
 $session_id = plaatdishes_db_get_session($ip);
 
-if (strlen($home_password)>0) {
-	if ((strlen($session_id)==0) || ($session!=$session_id)) {
-		// User not login, Redirect to login page
-		$pid = PAGE_HOME_LOGIN;
-	}
+if ((strlen($session_id)==0) || ($session!=$session_id)) {
+	// User not login, Redirect to login page
+	$pid = PAGE_HOME_LOGIN;
 }
+
+echo $login_uid;
 
 /*
 ** -------------------

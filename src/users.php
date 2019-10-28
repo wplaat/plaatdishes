@@ -18,10 +18,10 @@
 
 $user_name = plaatdishes_post("user_name", "");
 $user_email = plaatdishes_post("user_email", "");
-$user_active = plaatdishes_post("user_active", 1);
+$user_active = plaatdishes_post("user_active", 0);
 $user_username = plaatdishes_post("user_username", "");
 $user_password  = plaatdishes_post("user_password", "");
-$user_admin = plaatdishes_post("user_active", 0);
+$user_admin = plaatdishes_post("user_admin", 0);
 
 /*
 ** ---------------------
@@ -37,14 +37,12 @@ function plaatdishes_user_save() {
 	global $user_name;
 	global $user_email;
 	global $user_username;
-	global $user_password;
-	global $user_role;
+	global $user_active;
+	global $user_admin;
 	
 	/* output */
 	global $pid;
-	
-	$page = '';
-		
+			
 	$user = plaatdishes_db_users($uid);
 	
 	if (strlen($user_name)<3) {
@@ -55,7 +53,7 @@ function plaatdishes_user_save() {
 		
 		$page = t('EMAIL_INVALID');
 		
-	} else if (strlen($user_username)<5) {
+	} else if (strlen($user_username)<3) {
 		
 		$page =  t('USERNAME_TO_SHORT');
 		
@@ -63,39 +61,53 @@ function plaatdishes_user_save() {
 	
 	//	$page .=  t('USERNAME_EXIST');
 		
-	} else if ((strlen($user_password)>0) && (strlen($user_password)<5)) {
-
-		$page = t('PASSWORD_TO_SHORT');
-			
 	} else {
 	
-		if ($uid>0) {
+		if ($uid==0) {
 			
-			plaatdishes_db_users_update2($user_username, $user_password, $uid);
-									
-			$user->email = $user_email;			
-			$user->name = $user_name;
-			$user->active = $user_active;
-			$user->username = $user_username;
-			
-			plaatdishes_db_user_update($data);			
-		
-		} else  {
-			
-			/* Insert new member */
-			$member_id = plaatdishes_db_member_insert($user_username, $user_password);
-			
-			/* Insert new user */
-			plaatdishes_db_user_insert($member_id, $user_name, $user_email, $user_role);		
+			$user->uid = plaatdishes_db_member_insert($user_username, $user_password);
 		}
-		
-		$page = t('USER_SAVED');
-		
+					
+		$user->email = $user_email;			
+		$user->name = $user_name;
+		$user->active = $user_active;
+		$user->username = $user_username;
+		$user->admin = $user_admin;
+			
+		plaatdishes_db_users_update($user);			
+
 		$pid = PAGE_USERS;
+		$page = t('USER_SAVED');
 	} 	
 	
 	return $page;
 }
+
+
+function plaatdishes_user_save_password() {
+	
+	/* input */
+	global $uid;	
+	global $user_password;
+	
+	/* output */
+	global $pid;
+
+	if (strlen($user_password)<5) {
+
+		$page = t('PASSWORD_TO_SHORT');
+			
+	} else {
+			
+		plaatdishes_db_users_update2($uid, $user_password);
+			
+		$pid = PAGE_USERS;
+		$page = t('USER_SAVED');
+	} 	
+	
+	return $page;
+}
+
 
 function plaatdishes_user_cancel_do() {
 
@@ -133,6 +145,10 @@ function plaatdishes_user_page() {
 	
 	$page .= $error;
 	
+	$page .= '<div class="box">';	
+	
+	$page .= '<br/>';
+	
 	$page .= '<table>';
 	
 	$page .= '<tr>';
@@ -161,11 +177,6 @@ function plaatdishes_user_page() {
 	$page .= '</tr>';
 		
 	$page .= '<tr>';
-	$page .= '<td>'.t('LABEL_PASSWORD').'</td>';
-	$page .= '<td>'.plaatdishes_ui_input('user_password', 30, 30, "").'</td>';
-	$page .= '</tr>';
-	
-	$page .= '<tr>';
 	$page .= '<td>'.t('LABEL_LAST_LOGIN').'</td>';
 	$page .= '<td>'.$user->last_login.'</td>';
 	$page .= '</tr>';
@@ -178,10 +189,32 @@ function plaatdishes_user_page() {
 	$page .= '</table>';
 	
 	$page .= '<div class="nav">';	
-	$page .= plaatdishes_link('pid='.PAGE_USERS, t('LINK_CANCEL'));
 	$page .= plaatdishes_link('pid='.PAGE_USER.'&uid='.$uid.'&eid='.EVENT_SAVE, t('LINK_SAVE'));
+	$page .= plaatdishes_link('pid='.PAGE_USERS, t('LINK_CANCEL'));
 	$page .=  '</div>';	
+	$page .= '</div>';	
 	
+	$page .= '<br/>';
+	
+	$page .= '<div class="box">';	
+	$page .= '<table>';
+	
+	$page .= '<br/>';
+	
+	$page .= '<tr>';
+	$page .= '<td>'.t('LABEL_PASSWORD').'</td>';
+	$page .= '<td>'.plaatdishes_ui_input('user_password', 30, 30, "").'</td>';
+	$page .= '</tr>';
+	
+	$page .= '</table>';
+	
+	$page .= '<div class="nav">';	
+	$page .= plaatdishes_link('pid='.PAGE_USER.'&uid='.$uid.'&eid='.EVENT_SAVE_PASSWORD, t('LINK_SAVE'));
+	$page .= plaatdishes_link('pid='.PAGE_USERS, t('LINK_CANCEL'));
+	$page .=  '</div>';
+	
+	$page .= '</div>';	
+		
 	return $page;
 }
 
@@ -194,11 +227,12 @@ function plaatdishes_users_page() {
 	$page .= '<th>'.t('LABEL_ID').'</th>';
 	$page .= '<th>'.t('LABEL_USERNAME').'</th>';
 	$page .= '<th>'.t('LABEL_LAST_LOGIN').'</th>';
+	$page .= '<th>'.t('LABEL_ACTIVE').'</th>';
 	$page .= '<th>'.t('LABEL_ADMIN').'</th>';
 	$page .= '</tr>';
 
 		
-	$sql = 'select uid, name, email, username, last_login, admin from users order by uid';
+	$sql = 'select uid, name, email, username, last_login, active, admin from users order by uid';
     $result = plaatdishes_db_query($sql);	
     while ($data = plaatdishes_db_fetch_object($result)) {
 		$page .= '<tr>';
@@ -213,6 +247,10 @@ function plaatdishes_users_page() {
 				
 		$page .= '<td>';
 		$page .= $data->last_login;
+		$page .= '</td>';	
+
+		$page .= '<td>';
+		$page .= $data->active;
 		$page .= '</td>';		
 		
 		$page .= '<td>';
@@ -242,10 +280,16 @@ function plaatdishes_users() {
     global $pid;  
 	global $eid;  
 
+	$error="";
+	
 	switch ($eid) {
 		
 		case EVENT_SAVE:
 			$error = plaatdishes_user_save();
+			break;
+			
+		case EVENT_SAVE_PASSWORD:
+			$error = plaatdishes_user_save_password();
 			break;
 	}
 	
@@ -253,11 +297,11 @@ function plaatdishes_users() {
 	switch ($pid) {
 
 		case PAGE_USER:
-			return plaatdishes_user_page();
+			return plaatdishes_user_page().$error;
 			break;
 			
 		case PAGE_USERS:
-			return plaatdishes_users_page();
+			return plaatdishes_users_page().$error;
 			break;
 	}
 }

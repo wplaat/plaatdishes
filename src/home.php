@@ -33,7 +33,7 @@ $version = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
 
 function plaatdishes_home_save_event() {
 	
-	$user = plaatdishes_post("user", 0);
+	$uid = plaatdishes_post("uid", 0);
 	$task1 = plaatdishes_post("task1", 0);
 	$task2 = plaatdishes_post("task2", 0);
 	$task3 = plaatdishes_post("task3", 0);
@@ -59,7 +59,7 @@ function plaatdishes_home_save_event() {
 		return;
 	}
 	
-	plaatdishes_db_dishes_insert($user, $task1, $task2, $task3, $task4);
+	plaatdishes_db_dishes_insert($uid, $task1, $task2, $task3, $task4);
 	
 	plaatdishes_email_notification();
 }
@@ -72,14 +72,16 @@ function plaatdishes_home_login_event() {
 	
 	$password = plaatdishes_post("password", "");
 	$username = plaatdishes_post("username", "");
-			
-	$home_password = plaatdishes_db_config_value('home_password',CATEGORY_GENERAL);
-	$home_username = plaatdishes_db_config_value('home_username',CATEGORY_GENERAL);
-	
-	if (plaatdishes_password_verify($password, $home_password) && ($home_username==$username)) {
-	
-		$session = plaatdishes_db_get_session($ip, true);
+
+	$uid = plaatdishes_db_users_id($username, $password);
+
+	if ($uid>0) {	
+		$session = plaatdishes_db_get_session($ip, $uid, true);
 		$pid = PAGE_HOME;
+		
+		$user = plaatdishes_db_users($uid);
+		$user->last_login = date('Y-m-d H:i:s');
+		plaatdishes_db_users_update($user);		
 	} 
 }
 
@@ -108,10 +110,9 @@ function plaatdishes_task($task, $item) {
    return $page;
 }
 
-
 function plaatdishes_users($uid=0) {
 
-	$page ='<select id="user" name="user" class="dropdown-select">';
+	$page ='<select id="uid" name="uid" class="dropdown-select">';
 	
 	$sql = 'select uid, name from users where active=1 order by uid ';
     $result = plaatdishes_db_query($sql);	
@@ -207,7 +208,7 @@ function plaatdishes_home_page() {
 	$page .= '</tr>';
 		
 	$count = 0;
-	$user = 0;
+	$uid = 0;
 	$sql = 'select a.uid, sum(a.total) as total, count(a.uid) as amount, b.name from dishes a, users b where a.uid=b.uid and b.active=1 and a.total>0 group by a.uid order by total';
     $result = plaatdishes_db_query($sql);	
     while ($data = plaatdishes_db_fetch_object($result)) {
@@ -235,7 +236,7 @@ function plaatdishes_home_page() {
 		$page .= '<td>';
 		if ($count==0) {
 			$page .= t('LABEL_DISH_HELPER');
-			$user = $data->uid;
+			$uid = $data->uid;
 			$count=1;
 		} 
 		$page .= '</td>';		
@@ -253,7 +254,7 @@ function plaatdishes_home_page() {
 	
 	$page .= '<td style="padding-right: 10px;">';
 	$page .= t('LABEL_NAME').': ';
-	$page .= plaatdishes_users($user);
+	$page .= plaatdishes_users($uid);
 	$page .= '</td>';
 	
 	$page .= '<td style="padding-right: 10px;">';

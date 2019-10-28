@@ -27,3 +27,5 @@ ALTER TABLE `dishes` CHANGE `pid` `uid` INT(11) NOT NULL;
 DELETE FROM config WHERE token = 'home_username';
 DELETE FROM config WHERE token = 'home_password';
 
+ALTER TABLE `session` ADD `uid` INT NOT NULL AFTER `ip`;
+
