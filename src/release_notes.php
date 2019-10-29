@@ -26,7 +26,7 @@ $note[3] = '<div class="subparagraph">Version 0.3 (28-10-2019)</div>
 <div class="large_text">
 <ul>
 <li>Added icon</li>
-<li>Added users managed page</li>
+<li>Added user management page (admin mode)</li>
 </ul>
 </div>';
 
