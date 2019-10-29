@@ -77,12 +77,13 @@ function plaatdishes_home_login_event() {
 
 	if ($uid>0) {	
 		$session = plaatdishes_db_get_session($ip, true);		
-		$pid = PAGE_HOME;
-		
+				
 		$user = plaatdishes_db_users($uid);
 		$user->last_login = date('Y-m-d H:i:s');
-		$user->sid = plaatdishes_db_get_session_sid($session);
+		$user->session_id = $session;
 		plaatdishes_db_users_update($user);		
+		
+		$pid = PAGE_HOME;
 	} 
 }
 
@@ -184,10 +185,9 @@ function plaatdishes_home_page() {
 	global $pid;
 	global $name;
 	global $version;
-	global $session_id;
+	global $session;
 		
-	$sid = plaatdishes_db_get_session_sid($session_id);
-	$admin = plaatdishes_db_users_admin($sid);
+	$admin = plaatdishes_db_users_admin($session);
 		
 	$page = '<h1>';
 	$page .= t('TITLE').' ';

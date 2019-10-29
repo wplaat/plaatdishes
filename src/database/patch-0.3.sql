@@ -30,3 +30,5 @@ DELETE FROM config WHERE token = 'home_password';
 
 ALTER TABLE `session` ADD `uid` INT NOT NULL AFTER `ip`;
 
+ALTER TABLE `users` CHANGE `sid` `session_id` VARCHAR(250) NOT NULL;
+

@@ -244,20 +244,6 @@ function plaatdishes_db_check_version() {
 ** ---------------------
 */
 
-function plaatdishes_db_get_session_sid($session_id) {
-
-	$sid = 0;
-	
-	$sql = 'select sid from session where session_id="'.$session_id.'"';	
-	$result = plaatdishes_db_query($sql);    
-	$data = plaatdishes_db_fetch_object($result);
-	
-	if ( isset($data->sid) ) { 
-		$sid = $data->sid;
-	}	
-	return $sid;
-}
-
 function plaatdishes_db_get_session($ip, $new=false) {
    
    $sql = 'select sid, timestamp, session_id, requests from session where ip="'.$ip.'"';
@@ -360,17 +346,17 @@ function plaatdishes_db_users_insert($username, $password) {
 
 function plaatdishes_db_users($uid) {
 
-	$sql = 'select uid, name, email, active, username, last_login, admin, sid from users where uid='.$uid;
+	$sql = 'select uid, name, email, active, username, last_login, admin, session_id from users where uid='.$uid;
 	$result = plaatdishes_db_query($sql);
 	
 	return  plaatdishes_db_fetch_object($result);
 }
 
-function plaatdishes_db_users_admin($sid) {
+function plaatdishes_db_users_admin($session_id) {
 
 	$admin = 0;
 	
-	$sql = 'select admin from users where sid='.$sid.' order by last_login desc limit 0,1';
+	$sql = 'select admin from users where session_id="'.$session_id.'"';
 	$result = plaatdishes_db_query($sql);
 	$data = plaatdishes_db_fetch_object($result);
 	
@@ -389,7 +375,7 @@ function plaatdishes_db_users_update($data) {
 	$query .= 'username="'.$data->username.'", ';
 	$query .= 'active='.$data->active.', ';
 	$query .= 'admin='.$data->admin.', ';
-	$query .= 'sid='.$data->sid.' ';
+	$query .= 'session_id="'.$data->session_id.'" ';
 	$query .= 'where uid='.$data->uid; 
 	
 	plaatdishes_db_query($query);
