@@ -41,31 +41,27 @@ function plaatdishes_pay() {
 	
 	$page = "";
 	
-	if ($amount>0) {
-	
-		if (strlen($user->uid)==0) {
-	
-			$page = t('USER_DOES_NOT_EXIST');
-				
-		} if (strlen($user->uid)==0) {
-	
-			$page = t('USER_DOES_NOT_EXIST');
-			
-		} else if (($user->admin==0) && ($user_amount<$amount)) {
-			
-			$page = t('TOO_LESS_COINS');		
-			
-		} else {
+	if ($amount<=0) {	
+		$page = t('AMOUNT_TO_SMALL');
 		
-			plaatdishes_db_transaction_insert($user_to->uid, $amount, $description);
-			
-			if ($user->admin==0) {
-				plaatdishes_db_transaction_insert($user->uid, ($amount*-1), $description);
-			}
+	} else if ($amount>8) {
+		$page = t('AMOUNT_TO_BIG');
 	
-			$page = t('PAYMENT_DONE');
-		} 		
-	}
+	} else if ($user->uid==0) {	
+		$page = t('USER_DOES_NOT_EXIST');
+				
+	} else if (($user->admin==0) && ($user_amount<$amount)) {			
+		$page = t('TOO_LESS_COINS');		
+			
+	} else {
+		
+		plaatdishes_db_transaction_insert($user_to->uid, $amount, $description);
+		
+		if ($user->admin==0) {
+			plaatdishes_db_transaction_insert($user->uid, ($amount*-1), $description);
+		}
+		$page = t('PAYMENT_DONE');
+	} 			
 	return $page;
 }
 
@@ -175,7 +171,7 @@ function plaatdishes_transaction_page() {
 	$page .= '</table>';
 
 	$page .= '<div class="nav">';
-	$page .= plaatdishes_link('pid='.PAGE_HOME, t('LINK_CANCEL'));
+	$page .= plaatdishes_link('pid='.PAGE_HOME, t('LINK_HOME'));
 	$page .=  '</div>';
 
 	return $page;

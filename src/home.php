@@ -33,6 +33,8 @@ $version = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
 
 function plaatdishes_home_save_event() {
 	
+	global $session;
+	
 	$user = plaatdishes_db_users_session($session);
 	
 	if ($user->admin==1) {
