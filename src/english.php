@@ -117,6 +117,11 @@ $lang['LABEL_FROM'] = 'From';
 $lang['LABEL_TO'] = 'To';
 $lang['LABEL_DESCRIPTION'] = 'Description';
 
+$lang['USER_DOES_NOT_EXIST'] = 'User doesnot exist';
+$lang['AMOUNT_TO_BIG'] = 'Amount is too big';
+$lang['PAYMENT_DONE'] = 'Payment done!';
+$lang['TOO_LESS_COINS'] = 'Too less coins';
+
 /*
 ** ------------------
 ** THE END

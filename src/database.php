@@ -330,18 +330,13 @@ function plaatdishes_db_users($uid) {
 	return  plaatdishes_db_fetch_object($result);
 }
 
-function plaatdishes_db_users_admin($session_id) {
-
-	$admin = 0;
+function plaatdishes_db_users_session($session_id) {
 	
-	$sql = 'select admin from users where session_id="'.$session_id.'"';
+	$sql = 'select uid, admin, name from users where session_id="'.$session_id.'"';
 	$result = plaatdishes_db_query($sql);
 	$data = plaatdishes_db_fetch_object($result);
 	
-	if ( isset($data->admin) ) { 
-		$admin = $data->admin;
-	}	
-	return $admin;	
+	return $data;	
 }
 
 function plaatdishes_db_users_update($data) {
@@ -413,11 +408,16 @@ function plaatdishes_db_config_update($config) {
 
 function plaatdishes_db_transaction_total($uid) {
 
-	$query  = 'select sum(amount) from transaction where uid='.$uid;			
+	$amount = 0; 
+	$query  = 'select sum(amount) as amount from transaction where uid='.$uid;			
 	$result = plaatdishes_db_query($query);
+		
 	$data = plaatdishes_db_fetch_object($result);
-
-	return $data->amount;
+	
+	if (isset($data->amount)) {
+		$amount = $data->amount;
+	}
+	return $amount;
 }
 
 function plaatdishes_db_transaction_insert($uid, $amount, $description) {

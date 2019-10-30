@@ -33,39 +33,44 @@ $version = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
 
 function plaatdishes_home_save_event() {
 	
-	$uid = plaatdishes_post("uid", 0);
-	$task1 = plaatdishes_post("task1", 0);
-	$task2 = plaatdishes_post("task2", 0);
-	$task3 = plaatdishes_post("task3", 0);
-	$task4 = plaatdishes_post("task4", 0);
+	$user = plaatdishes_db_users_session($session);
 	
-	if (($task1<0) && ($task1>2)) {
-		return;
+	if ($user->admin==1) {
+	
+		$uid = plaatdishes_post("uid", 0);
+		$task1 = plaatdishes_post("task1", 0);
+		$task2 = plaatdishes_post("task2", 0);
+		$task3 = plaatdishes_post("task3", 0);
+		$task4 = plaatdishes_post("task4", 0);
+		
+		if (($task1<0) && ($task1>2)) {
+			return;
+		}
+		
+		if (($task2<0) && ($task2>2)) {
+			return;
+		}
+		
+		if (($task3<0) && ($task3>2)) {
+			return;
+		}
+		
+		if (($task4<0) && ($task4>2)) {
+			return;
+		}
+		
+		if (($task1==0) && ($task2==0) && ($task3==0) && ($task4==0)) {
+			return;
+		}
+		
+		plaatdishes_db_dishes_insert($uid, $task1, $task2, $task3, $task4);
+		
+		$amount = $task1 + $task2 + $task3 + $task4;
+		
+		plaatdishes_db_transaction_insert($uid, $amount, "Dishwash event");
+		
+		plaatdishes_email_notification();
 	}
-	
-	if (($task2<0) && ($task2>2)) {
-		return;
-	}
-	
-	if (($task3<0) && ($task3>2)) {
-		return;
-	}
-	
-	if (($task4<0) && ($task4>2)) {
-		return;
-	}
-	
-	if (($task1==0) && ($task2==0) && ($task3==0) && ($task4==0)) {
-		return;
-	}
-	
-	plaatdishes_db_dishes_insert($uid, $task1, $task2, $task3, $task4);
-	
-	$amount = $task1 + $task2 + $task3 + $task4;
-	
-	plaatdishes_db_transaction_insert($uid, $amount, "Dishwash event");
-	
-	plaatdishes_email_notification();
 }
 
 function plaatdishes_home_login_event() {
@@ -191,7 +196,7 @@ function plaatdishes_home_page() {
 	global $version;
 	global $session;
 		
-	$admin = plaatdishes_db_users_admin($session);
+	$user = plaatdishes_db_users_session($session);
 		
 	$page = '<h1>';
 	$page .= t('TITLE').' ';
@@ -260,7 +265,7 @@ function plaatdishes_home_page() {
 	
 	$page .= '<br/>';
 	
-	if ($admin==1) {
+	if ($user->admin==1) {
 	
 		$page .= '<table>';
 		$page .= '<tr>';
@@ -305,7 +310,7 @@ function plaatdishes_home_page() {
 	$page .= plaatdishes_link('pid='.PAGE_TRANSACTION, t('LINK_TRANSACTION'));		
 	$page .= plaatdishes_link('pid='.PAGE_RELEASE_NOTES, t('LINK_RELEASE_NOTES'));	
 		
-	if ($admin==1) {
+	if ($user->admin==1) {
 		$page .= plaatdishes_link('pid='.PAGE_USERS, t('LINK_USERS'));	
 	}
 	$page .= plaatdishes_link('pid='.PAGE_HOME_LOGIN, t('LINK_LOGOUT'));
