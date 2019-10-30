@@ -61,6 +61,10 @@ function plaatdishes_home_save_event() {
 	
 	plaatdishes_db_dishes_insert($uid, $task1, $task2, $task3, $task4);
 	
+	$amount = $task1 + $task2 + $task3 + $task4;
+	
+	plaatdishes_db_transaction_insert($uid, $amount, "Dishwash event");
+	
 	plaatdishes_email_notification();
 }
 
@@ -214,7 +218,7 @@ function plaatdishes_home_page() {
 		
 	$count = 0;
 	$uid = 0;
-	$sql = 'select a.uid, sum(a.total) as total, count(a.uid) as amount, b.name from dishes a, users b where a.uid=b.uid and b.active=1 and a.total>0 group by a.uid order by total';
+	$sql = 'SELECT a.uid, a.name, (SELECT count(b.uid) from dishes b where b.uid=a.uid) as amount, (SELECT sum(c.amount) from transaction c where c.uid=a.uid) as total FROM users a where a.active=1 order by total';
     $result = plaatdishes_db_query($sql);	
     while ($data = plaatdishes_db_fetch_object($result)) {
 		$page .= '<tr>';
@@ -235,7 +239,9 @@ function plaatdishes_home_page() {
 		$sql2 = 'select date from dishes where uid='.$data->uid.' order by date desc limit 0,1';
 		$result2 = plaatdishes_db_query($sql2);	
 		$data2 = plaatdishes_db_fetch_object($result2);
-		$page .= plaatdishes_convert_date($data2->date);
+		if (isset($data2->date)) {
+			$page .= plaatdishes_convert_date($data2->date);
+		}
 		$page .= '</td>';	
 		
 		$page .= '<td>';
@@ -296,6 +302,7 @@ function plaatdishes_home_page() {
 	
 	$page .= '<p>';
 	$page .= plaatdishes_link('pid='.PAGE_OVERVIEW, t('LINK_OVERVIEW'));	
+	$page .= plaatdishes_link('pid='.PAGE_TRANSACTION, t('LINK_TRANSACTION'));		
 	$page .= plaatdishes_link('pid='.PAGE_RELEASE_NOTES, t('LINK_RELEASE_NOTES'));	
 		
 	if ($admin==1) {
@@ -305,9 +312,7 @@ function plaatdishes_home_page() {
 	$page .= '</p>';
 	
 	$page .= '</div>';
-			
-	$page .= plaatdishes_db_dishes_check();
-
+		
 	$page .= '<div class="upgrade" id="upgrade"></div>';
 	$page .= '<script type="text/javascript" src="js/version1.js"></script>';
 	

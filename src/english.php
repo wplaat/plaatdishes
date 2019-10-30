@@ -45,6 +45,8 @@ $lang['LINK_NEXT']          = 'Next';
 $lang['LINK_RELEASE_NOTES'] = 'Release Notes';
 $lang['LINK_OVERVIEW']      = 'Overview';
 $lang['LINK_USERS']         = 'Users';
+$lang['LINK_TRANSACTION']   = 'Transaction';
+$lang['LINK_PAY']           = 'Pay';
 
 /*
 ** ------------------
@@ -69,7 +71,7 @@ $lang['DATABASE_CONNECTION_FAILED' ] = 'The connection to the database failed. P
 
 $lang['LABEL_ID'] = 'Id';
 $lang['LABEL_NAME'] = 'Name';
-$lang['LABEL_COINS'] = 'Score';
+$lang['LABEL_COINS'] = 'Coins';
 $lang['LABEL_DATE'] = 'Date';
 $lang['LABEL_AMOUNT'] = 'Amount';
 $lang['LABEL_EXTRA'] = 'Extra';
@@ -103,6 +105,17 @@ $lang['USERNAME_TO_SHORT'] = 'Username to short';
 $lang['USERNAME_EXIST'] = 'Username exist';
 $lang['PASSWORD_TO_SHORT'] = 'Password to short';
 $lang['USER_SAVED'] = 'User information saved';
+
+/*
+** ------------------
+** TRANSACTION
+** ------------------
+*/
+
+$lang['LABEL_TRANSACTION'] = 'Transaction';
+$lang['LABEL_FROM'] = 'From';
+$lang['LABEL_TO'] = 'To';
+$lang['LABEL_DESCRIPTION'] = 'Description';
 
 /*
 ** ------------------

@@ -221,6 +221,11 @@ switch ($pid) {
 		include "users.php";
 		$page = plaatdishes_users();
 		break;
+		
+	case PAGE_TRANSACTION:
+		include "transaction.php";
+		$page = plaatdishes_transaction();
+		break;
 }
 
 

@@ -51,7 +51,7 @@ function plaatdishes_email_notification() {
 		
 	$count=0;
 		
-	$sql = 'select a.uid, sum(a.total) as total, count(a.uid) as amount, b.name from dishes a, users b where a.uid=b.uid and b.active=1 and a.total>0 group by a.uid order by total';
+	$sql = 'SELECT a.uid, a.name, (SELECT count(b.uid) from dishes b where b.uid=a.uid) as amount, (SELECT sum(c.amount) from transaction c where c.uid=a.uid) as total FROM users a where a.active=1 order by total';
 	$result = plaatdishes_db_query($sql);	
 	while ($data = plaatdishes_db_fetch_object($result)) {
 	
@@ -73,7 +73,9 @@ function plaatdishes_email_notification() {
 		$sql2 = 'select date from dishes where uid='.$data->uid.' order by date desc limit 0,1';
 		$result2 = plaatdishes_db_query($sql2);	
 		$data2 = plaatdishes_db_fetch_object($result2);
-		$body .= plaatdishes_convert_date($data2->date);
+		if (isset($data2->date)) {
+			$body .= plaatdishes_convert_date($data2->date);
+		}
 		$body .= '</td>';	
 	
 		$body .= '<td>';

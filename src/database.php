@@ -279,35 +279,13 @@ function plaatdishes_db_get_session($ip, $new=false) {
 ** DISHES
 ** ---------------------
 */
-
-function plaatdishes_db_dishes_check() {
-
-	$page = "";
-	$sql = 'select did, date, uid, task1, task2, task3, task4, total, hash from dishes';
-    $result = plaatdishes_db_query($sql);
-    
-	while($data = plaatdishes_db_fetch_object($result)) {
-		$key = $data->date."-".$data->uid."-".$data->task1."-".$data->task2."-".$data->task3."-".$data->task4."-".$data->total;
-		$hash = md5($key);
-			
-		if ($hash!=$data->hash) {
-			$page .= "Record ".$data->did." is invalid!<br/>";
-		}
-	}
-    return $page;
-}
    
 function plaatdishes_db_dishes_insert($uid, $task1, $task2, $task3, $task4) {
  
     $date = date('Y-m-d');
-	
-	$total = $task1 + $task2 + $task3 + $task4;
-	
-	$key = $date."-".$uid."-".$task1."-".$task2."-".$task3."-".$task4."-".$total;
-	$hash = md5($key);
-	
-    $query  = 'insert into dishes (date, uid, task1, task2, task3, task4, total, hash)';
-	$query .= 'values ("'.$date.'",'.$uid.','.$task1.','.$task2.','.$task3.','.$task4.','.$total.',"'.$hash.'")';
+		
+    $query  = 'insert into dishes (date, uid, task1, task2, task3, task4) ';
+	$query .= 'values ("'.$date.'",'.$uid.','.$task1.','.$task2.','.$task3.','.$task4.')';
 			
 	return plaatdishes_db_query($query);
 }
@@ -425,6 +403,30 @@ function plaatdishes_db_config_update($config) {
   $query = 'update config set value="'.$config->value.'", date="'.$now.'" where id='.$config->id;		
   
   return plaatdishes_db_query($query);
+}
+
+/*
+** ---------------------
+** TRANSACTION
+** ---------------------
+*/
+
+function plaatdishes_db_transaction_total($uid) {
+
+	$query  = 'select sum(amount) from transaction where uid='.$uid;			
+	$result = plaatdishes_db_query($query);
+	$data = plaatdishes_db_fetch_object($result);
+
+	return $data->amount;
+}
+
+function plaatdishes_db_transaction_insert($uid, $amount, $description) {
+
+	$date = date('Y-m-d');
+
+	$query  = 'insert into transaction (date, uid, amount, description) ';
+	$query .= 'values ("'.$date.'",'.$uid.','.$amount.',"'.$description.'")';	
+	plaatdishes_db_query($query);
 }
 
 /*

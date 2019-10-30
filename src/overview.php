@@ -45,7 +45,7 @@ function plaatdishes_overview_page() {
 		while ($row1 = plaatdishes_db_fetch_object($result1)) {
 			
 			$timestamp = date("Y-m-d", $current_date-($step*$i));	
-			$sql2 = 'select date, sum(total) as total from dishes where date<="'.$timestamp.'" and uid='.$row1->uid;		
+			$sql2 = 'select date, sum(amount) as total from transaction where date<="'.$timestamp.'" and uid='.$row1->uid;		
 			$result2 = plaatdishes_db_query($sql2);
 					
 			while ($row2 = plaatdishes_db_fetch_object($result2)) {

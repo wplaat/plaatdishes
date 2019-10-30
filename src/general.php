@@ -37,6 +37,7 @@ define('PAGE_RELEASE_NOTES',        12);
 define('PAGE_OVERVIEW',             13);
 define('PAGE_USERS',                14);
 define('PAGE_USER',                 15);
+define('PAGE_TRANSACTION',          16);
 
 /*
 ** -----------
@@ -53,6 +54,7 @@ define('EVENT_NEXT',                105);
 define('EVENT_PREV',                106);
 define('EVENT_EDIT',                107);
 define('EVENT_SAVE_PASSWORD',       108);
+define('EVENT_PAY',                 109);
 
 /*
 ** -----------

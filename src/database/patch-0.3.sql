@@ -32,3 +32,23 @@ ALTER TABLE `session` ADD `uid` INT NOT NULL AFTER `ip`;
 
 ALTER TABLE `users` CHANGE `sid` `session_id` VARCHAR(250) NOT NULL;
 
+-- 
+
+CREATE TABLE `transaction` (
+  `tid` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `uid` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `description` varchar(250) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `transaction` ADD PRIMARY KEY (`tid`);
+ALTER TABLE `transaction` CHANGE `tid` `tid` INT(11) NOT NULL AUTO_INCREMENT;
+
+INSERT INTO transaction (date, uid, amount) SELECT date, uid, total as amount FROM dishes;
+
+ALTER TABLE `dishes` DROP `hash`;
+ALTER TABLE `dishes` DROP `total`;
+
+
+
