@@ -22,13 +22,14 @@
 ** ---------------------
 */
 
-$note[3] = '<div class="subparagraph">Version 0.3 (30-10-2019)</div>
+$note[3] = '<div class="subparagraph">Version 0.3 (31-10-2019)</div>
 <div class="large_text">
 <ul>
 <li>Added icon</li>
 <li>Added user management page (admin mode)</li>
 <li>Added transaction page</li>
 <li>Bugfix: lplaat found a hack in to the system. This is now fixed!</li>
+<li>Bugfix: bplaat found a hack in to the system. This is now fixed!</li>
 </ul>
 </div>';
 

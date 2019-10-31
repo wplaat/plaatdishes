@@ -40,8 +40,12 @@ function plaatdishes_user_save() {
 	global $user_active;
 	global $user_admin;
 	
+	global $session;
+		
 	/* output */
 	global $pid;
+	
+	$user2 = plaatdishes_db_users_session($session);	
 			
 	$user = plaatdishes_db_users($uid);
 	
@@ -62,22 +66,24 @@ function plaatdishes_user_save() {
 	//	$page .=  t('USERNAME_EXIST');
 		
 	} else {
-	
-		if ($uid==0) {
-			
-			$user->uid = plaatdishes_db_member_insert($user_username, $user_password);
-		}
+		
+		if ($user2->admin==0) {
+		
+			if ($uid==0) {			
+				$user->uid = plaatdishes_db_member_insert($user_username, $user_password);
+			}
 					
-		$user->email = $user_email;			
-		$user->name = $user_name;
-		$user->active = $user_active;
-		$user->username = $user_username;
-		$user->admin = $user_admin;
-			
-		plaatdishes_db_users_update($user);			
-
-		$pid = PAGE_USERS;
-		$page = t('USER_SAVED');
+			$user->email = $user_email;			
+			$user->name = $user_name;
+			$user->active = $user_active;
+			$user->username = $user_username;
+			$user->admin = $user_admin;
+				
+			plaatdishes_db_users_update($user);			
+	
+			$pid = PAGE_USERS;
+			$page = t('USER_SAVED');
+		}
 	} 	
 	
 	return $page;

@@ -342,6 +342,8 @@ function plaatdishes_post($label, $default) {
  */
 function plaatdishes_token_decode($token) {
 	
+	$token=gzinflate(base64_decode($token));
+	
 	return htmlspecialchars_decode($token);
 }
 
@@ -350,7 +352,9 @@ function plaatdishes_token_decode($token) {
  */
 function plaatdishes_token_encode($token) {
    
-	return htmlspecialchars($token);	
+   $token = htmlspecialchars($token);	
+   
+   return base64_encode(gzdeflate($token));
 }
 
 /**

@@ -177,7 +177,7 @@ function plaatdishes_home_login_page() {
     $page .= '<br/>';
    
     $page .= '<div class="nav">';   
-    $page .= '<input type="hidden" name="token" value="pid='.PAGE_HOME_LOGIN.'&eid='.EVENT_LOGIN.'"/>';
+    $page .= '<input type="hidden" name="token" value="'.plaatdishes_token_encode('pid='.PAGE_HOME_LOGIN.'&eid='.EVENT_LOGIN).'"/>';
     $page .= '<input type="submit" name="Submit" id="normal_link" value="'.t('LINK_LOGIN').'"/>';
     $page .= '</div>';
  	

@@ -46,6 +46,9 @@ function plaatdishes_pay() {
 		
 	} else if ($amount>8) {
 		$page = t('AMOUNT_TO_BIG');
+		
+	} else if (strlen($description)==0) {
+		$page = t('DESCRIPTION_IS_MANDATORY');
 	
 	} else if ($user->uid==0) {	
 		$page = t('USER_DOES_NOT_EXIST');
@@ -73,9 +76,13 @@ function plaatdishes_pay() {
 
 function plaatdishes_users($uid=0) {
 
+	global $session;
+
+	$user = plaatdishes_db_users_session($session);	
+
 	$page ='<select id="to" name="to" class="dropdown-select">';
 	
-	$sql = 'select uid, name from users where active=1 and uid!='.$uid. ' order by uid';
+	$sql = 'select uid, name from users where active=1 and uid!='.$user->uid. ' order by uid';
     $result = plaatdishes_db_query($sql);	
 	
 	while ($data = plaatdishes_db_fetch_object($result)) {	
@@ -91,18 +98,17 @@ function plaatdishes_users($uid=0) {
    return $page;
 }
 
-function plaatdishes_amount() {
+function plaatdishes_amount($amount=0) {
 
 	$page ='<select id="amount" name="amount" class="dropdown-select">';
-	$page.='<option value="0" selected="selected">0</option>';
-	$page.='<option value="1">1</option>';
-	$page.='<option value="2">2</option>';
-	$page.='<option value="3">3</option>';
-	$page.='<option value="4">4</option>';
-	$page.='<option value="5">5</option>';
-	$page.='<option value="6">6</option>';
-	$page.='<option value="7">7</option>';
-	$page.='<option value="8">8</option>';		
+	
+	for ($i=0; $i<=8; $i++) {
+		$page.='<option value="'.$i.'" ';
+		if ($amount==$i) {
+			$page .= 'selected="selected"';
+		}
+		$page.= '>'.$i.'</option>';
+	}	
 	$page.='</select>';	
     
 	return $page;
@@ -117,6 +123,9 @@ function plaatdishes_amount() {
 function plaatdishes_transaction_page() {
 	
 	global $session;
+	global $description;
+	global $amount;
+	global $to;
 	
 	$user = plaatdishes_db_users_session($session);	
 	
@@ -152,15 +161,15 @@ function plaatdishes_transaction_page() {
 	$page .= '</td>';
 	
 	$page .= '<td>';
-	$page .= plaatdishes_users($user->uid);
+	$page .= plaatdishes_users($to);
 	$page .= '</td>';
 	
 	$page .= '<td>';
-	$page .= plaatdishes_amount();
+	$page .= plaatdishes_amount($amount);
 	$page .= '</td>';
 		
 	$page .= '<td>';
-	$page .= plaatdishes_ui_input('description', 20, 20, "", false);
+	$page .= plaatdishes_ui_input('description', 20, 20, $description, false);
 	$page .= '</td>';
 	
 	$page .= '<td>';
