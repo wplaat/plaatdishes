@@ -120,7 +120,7 @@ function plaatdishes_market_place_page() {
 	$page .= '<tr>';
 	$page .= '</tr>';
 	
-	$sql = 'select mid, description, price, image from market_place';
+	$sql = 'select mid, description, price, image from market_place order by price';
 	$result = plaatdishes_db_query($sql);	
 	while ($data = plaatdishes_db_fetch_object($result)) {
 		
