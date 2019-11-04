@@ -240,7 +240,7 @@ function plaatdishes_home_page() {
 		$page .= '</td>';	
 		
 		$page .= '<td>';
-		$page .= ($data->total/10).' '.t('LABEL_EURO');
+		$page .= ($data->total*2/10).' '.t('LABEL_EURO');
 		$page .= '</td>';	
 		
 		$page .= '<td>';
