@@ -217,7 +217,8 @@ function plaatdishes_home_page() {
 	$page .= '<table>';
 	$page .= '<tr>';
 	$page .= '<th>'.t('LABEL_NAME').'</th>';
-	$page .= '<th>'.t('LABEL_COINS').'</th>';
+	$page .= '<th>'.t('LABEL_POINTS').'</th>';
+	$page .= '<th>'.t('LABEL_MONEY').'</th>';
 	$page .= '<th>'.t('LABEL_AMOUNT').'</th>';
 	$page .= '<th>'.t('LABEL_DATE').'</th>';
 	$page .= '<th>'.t('LABEL_EXTRA').'</th>';
@@ -236,6 +237,10 @@ function plaatdishes_home_page() {
 		
 		$page .= '<td>';
 		$page .= $data->total;
+		$page .= '</td>';	
+		
+		$page .= '<td>';
+		$page .= ($data->total/10).' '.t('LABEL_EURO');
 		$page .= '</td>';	
 		
 		$page .= '<td>';
@@ -310,6 +315,7 @@ function plaatdishes_home_page() {
 	$page .= '<p>';
 	$page .= plaatdishes_link('pid='.PAGE_OVERVIEW, t('LINK_OVERVIEW'));	
 	$page .= plaatdishes_link('pid='.PAGE_TRANSACTION, t('LINK_TRANSACTION'));		
+	$page .= plaatdishes_link('pid='.PAGE_MARKET_PLACE, t('LINK_MARKET_PLACE'));		
 	$page .= plaatdishes_link('pid='.PAGE_RELEASE_NOTES, t('LINK_RELEASE_NOTES'));	
 		
 	if ($user->admin==1) {

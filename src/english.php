@@ -46,7 +46,10 @@ $lang['LINK_RELEASE_NOTES'] = 'Release Notes';
 $lang['LINK_OVERVIEW']      = 'Overview';
 $lang['LINK_USERS']         = 'Users';
 $lang['LINK_TRANSACTION']   = 'Transaction';
-$lang['LINK_PAY']           = 'Pay';
+$lang['LINK_TRANSFER']      = 'Transfer';
+$lang['LINK_MARKET_PLACE']  = 'Market Place';
+$lang['LINK_BUY'] 			= 'Buy';
+
 
 /*
 ** ------------------
@@ -71,7 +74,8 @@ $lang['DATABASE_CONNECTION_FAILED' ] = 'The connection to the database failed. P
 
 $lang['LABEL_ID'] = 'Id';
 $lang['LABEL_NAME'] = 'Name';
-$lang['LABEL_COINS'] = 'Coins';
+$lang['LABEL_POINTS'] = 'Points';
+$lang['LABEL_MONEY'] = 'Money';
 $lang['LABEL_DATE'] = 'Date';
 $lang['LABEL_AMOUNT'] = 'Amount';
 $lang['LABEL_EXTRA'] = 'Extra';
@@ -112,7 +116,7 @@ $lang['USER_SAVED'] = 'User information saved';
 ** ------------------
 */
 
-$lang['LABEL_TRANSACTION'] = 'Transaction';
+$lang['LABEL_TRANSACTION'] = 'Transaction Points';
 $lang['LABEL_FROM'] = 'From';
 $lang['LABEL_TO'] = 'To';
 $lang['LABEL_DESCRIPTION'] = 'Description';
@@ -123,6 +127,22 @@ $lang['AMOUNT_TO_BIG'] = 'Amount is too big!';
 $lang['TOO_LESS_COINS'] = 'Too less coins!';
 $lang['PAYMENT_DONE'] = 'Payment done!';
 $lang['DESCRIPTION_IS_MANDATORY'] = 'Description is mandatory!'; 
+
+/*
+** ------------------
+** Marketplace
+** ------------------
+*/
+
+$lang['LABEL_MARKET_PLACE'] = 'Market Place';
+
+
+$lang['LABEL_PRICE'] = 'Price';
+$lang['LABEL_IMAGE'] = 'Image';
+$lang['LABEL_ACTION'] = 'Action';
+$lang['LABEL_EURO']  = 'euro';
+
+$lang['TOO_LESS_MONEY'] = 'No money enough!';
 
 /*
 ** ------------------

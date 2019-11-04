@@ -43,7 +43,8 @@ function plaatdishes_email_notification() {
 	$body .= '<table>';
 	$body .= '<tr>';
 	$body .= '<th width="15%" align="left">'.t('LABEL_NAME').'</th>';
-	$body .= '<th width="15%" align="left">'.t('LABEL_COINS').'</th>';
+	$body .= '<th width="15%" align="left">'.t('LABEL_POINTS').'</th>';
+	$body .= '<th width="15%" align="left">'.t('LABEL_MONEY').'</th>';
 	$body .= '<th width="15%" align="left">'.t('LABEL_AMOUNT').'</th>';
 	$body .= '<th width="25%" align="left">'.t('LABEL_DATE').'</th>';
 	$body .= '<th width="30%" align="left">'.t('LABEL_EXTRA').'</th>';
@@ -63,6 +64,10 @@ function plaatdishes_email_notification() {
 	
 		$body .= '<td>';
 		$body .= $data->total;
+		$body .= '</td>';	
+		
+		$body .= '<td>';
+		$body .= ($data->total/10);
 		$body .= '</td>';	
 		
 		$body .= '<td>';

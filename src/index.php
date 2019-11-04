@@ -226,6 +226,11 @@ switch ($pid) {
 		include "transaction.php";
 		$page = plaatdishes_transaction();
 		break;
+		
+	case PAGE_MARKET_PLACE:
+		include "marketplace.php";
+		$page = plaatdishes_market_place();
+		break;
 }
 
 

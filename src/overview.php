@@ -117,7 +117,7 @@ function plaatdishes_overview_page() {
 		}
 		</script>';
 	
-	$page .= '<h1>'.t('LABEL_COINS').' '.t('LINK_OVERVIEW').'</h1>';
+	$page .= '<h1>'.t('LABEL_POINTS').' '.t('LINK_OVERVIEW').'</h1>';
 
 	$page .= '<div id="chart_div" style="width:950px; height:350px"></div>';
 	

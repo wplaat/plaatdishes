@@ -67,7 +67,7 @@ function plaatdishes_user_save() {
 		
 	} else {
 		
-		if ($user2->admin==0) {
+		if ($user2->admin==1) {
 		
 			if ($uid==0) {			
 				$user->uid = plaatdishes_db_member_insert($user_username, $user_password);
