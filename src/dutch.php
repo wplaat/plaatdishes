@@ -44,6 +44,11 @@ $lang['LINK_PREV']          = 'Vorige';
 $lang['LINK_NEXT']          = 'Volgende';
 $lang['LINK_RELEASE_NOTES'] = 'Release Notes';
 $lang['LINK_OVERVIEW']      = 'Overzicht';
+$lang['LINK_USERS']         = 'Gebruikers';
+$lang['LINK_TRANSACTION']   = 'Transactie';
+$lang['LINK_TRANSFER']      = 'Overmaken';
+$lang['LINK_MARKET_PLACE']  = 'Marktplaats';
+$lang['LINK_BUY'] 			= 'Kopen';
 
 /*
 ** ------------------
@@ -82,6 +87,39 @@ $lang['LABEL_PREPARE_QUALITY'] = 'Afruim kwaliteit';
 $lang['LABEL_CLEANING_QUALITY'] = 'Afwas kwaliteit';
 $lang['LABEL_CLEANUP_QUALITY'] = 'Opruim kwaliteit';
 
+/*
+** ------------------
+** TRANSACTION
+** ------------------
+*/
+
+$lang['LABEL_TRANSACTION'] = 'Transactie Punten';
+$lang['LABEL_FROM'] = 'Van';
+$lang['LABEL_TO'] = 'Naar';
+$lang['LABEL_DESCRIPTION'] = 'Omschrijving';
+
+$lang['USER_DOES_NOT_EXIST'] = 'User does not exist!';
+$lang['AMOUNT_TO_SMALL'] = 'Amount is too small!';
+$lang['AMOUNT_TO_BIG'] = 'Amount is too big!';
+$lang['TOO_LESS_COINS'] = 'Too less coins!';
+$lang['PAYMENT_DONE'] = 'Payment done!';
+$lang['DESCRIPTION_IS_MANDATORY'] = 'Description is mandatory!'; 
+
+/*
+** ------------------
+** Marketplace
+** ------------------
+*/
+
+$lang['LABEL_MARKET_PLACE'] = 'Marktplaats';
+
+$lang['LABEL_PRICE'] = 'Prijs';
+$lang['LABEL_IMAGE'] = 'Foto';
+$lang['LABEL_ACTION'] = 'Actie';
+$lang['LABEL_EURO']  = 'euro';
+
+$lang['TOO_LESS_MONEY'] = 'Niet genoeg geld!';
+$lang['ITEM_ORDER'] = 'Order is verwerkt!';
 
 /*
 ** ------------------

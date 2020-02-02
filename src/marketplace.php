@@ -26,6 +26,51 @@ $description = plaatdishes_post("description", "");
 ** ---------------------
 */
 
+function plaatdishes_send_email($subject, $body) {
+
+	$header  = "From: Plaatdishes\r\n";
+	$header .= "MIME-Version: 1.0\r\n";
+	$header .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+			
+	$sql = "select email from users";
+	$result = plaatdishes_db_query($sql);
+	while ($row = plaatdishes_db_fetch_object($result)) {	
+	
+		if (isset($row->email)) {	
+			mail($row->email, $subject, $body, $header);
+		}
+	}
+}
+
+function plaatdishes_email_buy_notification($mid, $now) {
+
+	global $session;
+
+	$subject =  "PlaatDishes order ".$now;
+		
+	$body  = "<html>";
+	$body .= "<body>";
+	$body .= "<h1>PlaatDishes Order ".$now."</h1>";
+
+	$sql = 'select mid, description, image, price from market_place where mid='.$mid;
+	$result = plaatdishes_db_query($sql);	
+	$product = plaatdishes_db_fetch_object($result);
+		
+	$user = plaatdishes_db_users_session($session);	
+	
+	$body .= 'Customer: '.$user->name;
+	$body .= '<br/>';
+	$body .= 'Product: '.$product->description;
+	$body .= '<br/>';
+	$body .= 'Price: '.$product->price.' '.t('LABEL_EURO');
+	$body .= '<br/>';
+	$body .= 'Order Date: '.$now;
+	$body .= '<br/>';
+	
+	plaatdishes_send_email($subject, $body);		
+}
+
+
 function plaatdishes_buy() {
 		
 	global $mid;
@@ -36,8 +81,33 @@ function plaatdishes_buy() {
 	$sql = 'select mid, description, image, price from market_place where mid='.$mid;
 	$result = plaatdishes_db_query($sql);	
 	$product = plaatdishes_db_fetch_object($result);
-	
+		
 	$user = plaatdishes_db_users_session($session);	
+		
+	$sql2 = 'SELECT sum(price) as price from sales where uid='.$user->uid;
+	$result2 = plaatdishes_db_query($sql2);	
+	$data2 = plaatdishes_db_fetch_object($result2);
+		
+	$sql3 = 'SELECT a.uid, a.name, (SELECT count(b.uid) from dishes b where b.uid=a.uid) as amount, (SELECT sum(c.amount) from transaction c where c.uid=a.uid) as total FROM users a where a.active=1 and a.uid='.$user->uid;
+    $result3 = plaatdishes_db_query($sql3);	
+    $data3 = plaatdishes_db_fetch_object($result3);
+	
+	$money = ($data3->total*MONEY_CONVER_RATE);
+	if (isset($data2->price)) {
+		$money -= $data2->price;
+	}
+	
+	if ($money>$product->price) {
+			
+		$now = date('Y-m-d H:i:s');
+			
+		$query  = 'insert into sales(mid, uid, price, timestamp) values ('.$mid.','.$user->uid.','.$product->price.',"'.$now.'")';
+		plaatdishes_db_query($query);
+		
+		plaatdishes_email_buy_notification($mid, $now);
+		
+		$page = t('ITEM_ORDER');
+	}
 		
 	return $page;
 }

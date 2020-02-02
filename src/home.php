@@ -243,9 +243,9 @@ function plaatdishes_home_page() {
 		$result2 = plaatdishes_db_query($sql2);	
 		$data2 = plaatdishes_db_fetch_object($result2);
 		
-		$money = ($data->total*0.2);
-		if (isset($data->price)) {
-			$money -= $data-price;
+		$money = ($data->total * MONEY_CONVER_RATE);
+		if (isset($data2->price)) {
+			$money -= $data2->price;
 		}
 					
 		$page .= '<td>';
