@@ -136,13 +136,13 @@ $lang['DESCRIPTION_IS_MANDATORY'] = 'Description is mandatory!';
 
 $lang['LABEL_MARKET_PLACE'] = 'Market Place';
 
-
 $lang['LABEL_PRICE'] = 'Price';
 $lang['LABEL_IMAGE'] = 'Image';
 $lang['LABEL_ACTION'] = 'Action';
 $lang['LABEL_EURO']  = 'euro';
 
 $lang['TOO_LESS_MONEY'] = 'No money enough!';
+$lang['ITEM_ORDER'] = 'Item is ordered!';
 
 /*
 ** ------------------

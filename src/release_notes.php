@@ -22,6 +22,13 @@
 ** ---------------------
 */
 
+$note[5] = '<div class="subparagraph">Version 0.5 (02-02-2020)</div>
+<div class="large_text">
+<ul>
+<li>Improve marketplace</li>
+</ul>
+</div>';
+
 $note[4] = '<div class="subparagraph">Version 0.4 (04-11-2019)</div>
 <div class="large_text">
 <ul>

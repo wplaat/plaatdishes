@@ -239,8 +239,17 @@ function plaatdishes_home_page() {
 		$page .= $data->total;
 		$page .= '</td>';	
 		
+		$sql2 = 'SELECT sum(price) as price from sales where uid='.$data->uid;
+		$result2 = plaatdishes_db_query($sql2);	
+		$data2 = plaatdishes_db_fetch_object($result2);
+		
+		$money = ($data->total*0.2);
+		if (isset($data->price)) {
+			$money -= $data-price;
+		}
+					
 		$page .= '<td>';
-		$page .= ($data->total*2/10).' '.t('LABEL_EURO');
+		$page .= $money.' '.t('LABEL_EURO');
 		$page .= '</td>';	
 		
 		$page .= '<td>';

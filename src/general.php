@@ -39,6 +39,7 @@ define('PAGE_USERS',                14);
 define('PAGE_USER',                 15);
 define('PAGE_TRANSACTION',          16);
 define('PAGE_MARKET_PLACE',         17);
+define('PAGE_BUY', 			        18);
 
 /*
 ** -----------

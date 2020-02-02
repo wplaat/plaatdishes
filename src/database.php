@@ -242,6 +242,12 @@ function plaatdishes_db_check_version() {
 	if ($value=="0.3")  { 
 		plaatdishes_db_execute_sql_file("0.4");
 	}
+	
+	// Execute SQL path script v0.3 if needed
+	$value = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
+	if ($value=="0.4")  { 
+		plaatdishes_db_execute_sql_file("0.5");
+	}
 }
 
 /*

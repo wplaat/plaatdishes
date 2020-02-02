@@ -228,6 +228,7 @@ switch ($pid) {
 		break;
 		
 	case PAGE_MARKET_PLACE:
+	case PAGE_BUY:
 		include "marketplace.php";
 		$page = plaatdishes_market_place();
 		break;

@@ -26,10 +26,19 @@ $description = plaatdishes_post("description", "");
 ** ---------------------
 */
 
-function plaatdishes_pay() {
+function plaatdishes_buy() {
 		
+	global $mid;
+	global $session;
+	
 	$page = t('TOO_LESS_MONEY');
-			
+
+	$sql = 'select mid, description, image, price from market_place where mid='.$mid;
+	$result = plaatdishes_db_query($sql);	
+	$product = plaatdishes_db_fetch_object($result);
+	
+	$user = plaatdishes_db_users_session($session);	
+		
 	return $page;
 }
 
@@ -85,7 +94,33 @@ function plaatdishes_amount($amount=0) {
 ** ---------------------
 */
 
-function plaatdishes_market_place_page() {
+function plaatdishes_buy_page() {
+
+	global $mid;
+
+	$page = '<h1>'.t('LABEL_MARKET_PLACE').'</h1>';
+
+	$sql = 'select mid, description, price, image from market_place where mid='.$mid;
+	$result = plaatdishes_db_query($sql);	
+	$data = plaatdishes_db_fetch_object($result);
+		
+	$page .= '<img src="images\\'.$data->image.'" width="80" height="80">';
+	$page .= '<br/>';
+	$page .= $data->description;
+	$page .= '<br/>';
+	$page .= $data->price.' '.t('LABEL_EURO');
+	$page .= '<br/>';
+	$page .= '<br/>';
+
+	$page .= '<p>';
+	$page .= plaatdishes_link('pid='.PAGE_MARKET_PLACE.'&eid='.EVENT_BUY.'&mid='.$data->mid, t('LINK_BUY'));
+	$page .= plaatdishes_link('pid='.PAGE_MARKET_PLACE, t('LINK_CANCEL'));	
+	$page .= '</p>';
+	
+	return $page;
+}
+
+function plaatdishes_market_place_page($popup) {
 	
 	global $session;
 	global $description;
@@ -95,6 +130,12 @@ function plaatdishes_market_place_page() {
 	$user = plaatdishes_db_users_session($session);	
 	
 	$page = '<h1>'.t('LABEL_MARKET_PLACE').'</h1>';
+	
+	if (strlen($popup)>0) {
+		$page .= '<div class="upgrade">';
+		$page .= $popup;
+		$page .= '</div>';	
+	}
 	
 	$page .= '<table>';
 	$page .= '<tr>';
@@ -139,7 +180,7 @@ function plaatdishes_market_place_page() {
 		$page .= '</td>';
 			
 		$page .= '<td>';
-		$page .= plaatdishes_link('pid='.PAGE_MARKET_PLACE.'&eid='.EVENT_BUY.'&mid='.$data->mid, t('LINK_BUY'));
+		$page .= plaatdishes_link('pid='.PAGE_BUY.'&mid='.$data->mid, t('LINK_BUY'));
 		$page .= '</td>';
 		
 		$page .= '</tr>';
@@ -166,20 +207,24 @@ function plaatdishes_market_place() {
     global $pid;  
 	global $eid;  
 
-	$error="";
+	$popup="";
 	
 	switch ($eid) {
 		
 		case EVENT_BUY:
-			$error = plaatdishes_pay();
+			$popup = plaatdishes_buy();
 			break;
 	}
 	
 	/* Page handler */
 	switch ($pid) {
 
+		case PAGE_BUY:
+			return plaatdishes_buy_page();
+			break;
+			  
 		case PAGE_MARKET_PLACE:
-			return plaatdishes_market_place_page().'<div class="upgrade">'.$error.'</div>';
+			return plaatdishes_market_place_page($popup);
 			break;
 	}
 }
