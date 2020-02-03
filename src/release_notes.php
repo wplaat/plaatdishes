@@ -26,7 +26,7 @@ $note[5] = '<div class="subparagraph">Version 0.5 (02-02-2020)</div>
 <div class="large_text">
 <ul>
 <li>Improve marketplace</li>
-<li>Money value algoritme added</li>
+<li>Money conversion rate algoritme added :)</li>
 </ul>
 </div>';
 
