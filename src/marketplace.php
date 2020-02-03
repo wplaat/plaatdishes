@@ -66,6 +66,8 @@ function plaatdishes_email_buy_notification($mid, $now) {
 	$body .= '<br/>';
 	$body .= 'Order Date: '.$now;
 	$body .= '<br/>';
+	$body .= 'Order Number: '.uniqid();
+	$body .= '<br/>';
 	
 	plaatdishes_send_email($subject, $body);		
 }
@@ -205,6 +207,7 @@ function plaatdishes_market_place_page($popup) {
 		$page .= '<div class="upgrade">';
 		$page .= $popup;
 		$page .= '</div>';	
+		$page .= '<br/>';	
 	}
 	
 	$page .= '<table>';

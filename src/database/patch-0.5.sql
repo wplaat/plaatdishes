@@ -19,12 +19,12 @@ UPDATE config SET value="0.5" WHERE token='database_version';
 TRUNCATE market_place;
 
 INSERT INTO `market_place` (`mid`, `description`, `price`, `image`) VALUES
-(7, 'Raspberry Pi 4B - 4GB + Case + Ventilator + Voeding + 32GB SDCard', 89.85, 'pi.jpg'),
-(8, 'Drone', 79.95, 'drone.jpg'),
-(9, 'Mobiel Huawei P Smart Black', 148.95, 'huawei-p.jpg'),
-(10, 'bol.com bon 25 euro', 24.75, 'bol.com.jpg'),
-(11, 'Raspberry Pi 4B - 1GB + Case + Ventilator + Voeding + 32GB SDCard', 68.95, 'pi.jpg');
-(12, '25 euro op betaalrekening', 25.00, 'geld.jpg');
+(1, 'Geld op betaalrekening', 5.00, '5euro.png'),
+(2, 'Geld op betaalrekening', 20.00, '20euro.png'),
+(3, 'Geld op betaalrekening', 50.00, '50euro.png'),
+(4, 'Geld op betaalrekening', 100.00, '100euro.png'),
+(5, 'Geld op betaalrekening', 200.00, '200euro.png'),
+(6, 'Geld op betaalrekening', 500.00, '500euro.png');
 
 CREATE TABLE `sales` (
   `sid` int(11) NOT NULL,

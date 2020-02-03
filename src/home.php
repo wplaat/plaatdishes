@@ -247,9 +247,12 @@ function plaatdishes_home_page() {
 		if (isset($data2->price)) {
 			$money -= $data2->price;
 		}
+		if ($money<0) {
+			$money=0;
+		}
 					
 		$page .= '<td>';
-		$page .= $money.' '.t('LABEL_EURO');
+		$page .= round($money,2).' '.t('LABEL_EURO');
 		$page .= '</td>';	
 		
 		$page .= '<td>';

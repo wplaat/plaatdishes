@@ -209,7 +209,6 @@ h1::after {
 	content: "";
 	width: 24px;
 	height: 24px;
-	background-image: url(../images/24.png);
 	transform: translateY(2px);
 }
 h1::before {

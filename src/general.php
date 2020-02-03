@@ -66,8 +66,7 @@ define('EVENT_BUY',                 110);
 */
 
 define('CATEGORY_GENERAL',           0);
-
-define('MONEY_CONVER_RATE',          0.2);
+define('MONEY_CONVER_RATE',          (0.1+(date("w")/7)*0.1));
 
 /*
 ** ---------------------------------------------------------------- 
