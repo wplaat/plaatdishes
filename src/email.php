@@ -67,7 +67,7 @@ function plaatdishes_email_notification() {
 		$body .= '</td>';	
 		
 		$body .= '<td>';
-		$body .= ($data->total*2/10);
+		$body .= ($data->total*MONEY_CONVER_RATE);
 		$body .= '</td>';	
 		
 		$body .= '<td>';
