@@ -248,6 +248,11 @@ function plaatdishes_db_check_version() {
 	if ($value=="0.4")  { 
 		plaatdishes_db_execute_sql_file("0.5");
 	}
+	
+	$value = plaatdishes_db_config_value('database_version', CATEGORY_GENERAL);
+	if ($value=="0.5")  { 
+		plaatdishes_db_execute_sql_file("0.6.0");
+	}
 }
 
 /*

@@ -22,6 +22,13 @@
 ** ---------------------
 */
 
+$note[6] = '<div class="subparagraph">Version 0.6.0 (21-03-2020)</div>
+<div class="large_text">
+<ul>
+<li>Improve version number (introduce 3 digit)</li>
+</ul>
+</div>';
+
 $note[5] = '<div class="subparagraph">Version 0.5 (02-02-2020)</div>
 <div class="large_text">
 <ul>
